@@ -1,0 +1,217 @@
+/* --- Admissions Page Layout --- */
+.admissions-page {
+  background-color: #f9fbfa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Hero Section --- */
+.admissions-hero {
+  background: linear-gradient(135deg, #071F1A 0%, #0c2e28 100%);
+  color: #ffffff;
+  padding: 130px 0 90px;
+  text-align: center;
+  border-bottom-left-radius: 60px;
+  border-bottom-right-radius: 60px;
+  box-shadow: 0 20px 40px rgba(7, 31, 26, 0.2);
+  position: relative;
+}
+
+.admissions-hero h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+  color: #FEFFD3;
+}
+
+.admissions-hero p {
+  font-size: 1.25rem;
+  color: #d6d6d6;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Accent underline */
+.admissions-hero::after {
+  content: "";
+  width: 100px;
+  height: 4px;
+  background: #7CFF00;
+  display: block;
+  margin: 30px auto 0;
+  border-radius: 3px;
+}
+
+/* --- Card Board Section --- */
+.options-board {
+  flex: 1;
+  margin-top: -60px;
+  position: relative;
+  z-index: 5;
+  padding: 60px 20px;
+}
+
+.board-intro {
+  text-align: center;
+  margin-bottom: 60px;
+  color: #333;
+}
+
+.board-intro h2 {
+  font-weight: 800;
+  color: #071F1A;
+  font-size: 2rem;
+}
+
+/* --- Cards --- */
+.cards-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.option-card {
+  background: #ffffff;
+  width: 330px;
+  padding: 45px 35px;
+  border-radius: 25px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  border: 1px solid #eeeeee;
+  box-shadow: 0 15px 35px rgba(7, 31, 26, 0.08);
+}
+
+.option-card:hover {
+  transform: translateY(-18px);
+  box-shadow: 0 30px 50px rgba(7, 31, 26, 0.18);
+}
+
+/* Card Accent Borders */
+.card-info {
+  border-top: 6px solid #7CFF00;
+}
+
+.card-fees {
+  border-top: 6px solid #071F1A;
+}
+
+/* Card Content */
+.card-icon {
+  color: #555;
+  margin-bottom: 25px;
+  transition: all 0.3s ease;
+}
+
+.option-card:hover .card-icon {
+  color: #7CFF00;
+  transform: scale(1.1);
+}
+
+.option-card h3 {
+  font-size: 1.9rem;
+  margin-bottom: 18px;
+  font-weight: 800;
+  color: #071F1A;
+}
+
+.option-card p {
+  color: #555;
+  margin-bottom: 30px;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* Buttons */
+.card-btn {
+  background-color: transparent;
+  border: 2px solid #7CFF00;
+  color: #071F1A;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.option-card:hover .card-btn {
+  background-color: #7CFF00;
+  color: #071F1A;
+  box-shadow: 0 10px 25px rgba(124, 255, 0, 0.4);
+}
+
+/* --- Modal Styling --- */
+.modal-header-custom {
+  background: linear-gradient(135deg, #071F1A 0%, #0c2e28 100%);
+  color: #FEFFD3;
+}
+
+/* Fees Table */
+.fees-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.fees-table th,
+.fees-table td {
+  padding: 14px;
+  text-align: left;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.fees-table th {
+  background-color: #f5f5f5;
+  color: #071F1A;
+  font-weight: 700;
+}
+
+/* Modal Buttons */
+.btn-apply {
+  background-color: #7CFF00;
+  border: none;
+  color: #071F1A;
+  font-weight: 700;
+  padding: 10px 25px;
+}
+
+.btn-apply:hover {
+  background-color: #a8ff4d;
+}
+
+.btn-download {
+  background-color: #071F1A;
+  border: none;
+  color: #ffffff;
+  padding: 10px 25px;
+}
+
+.btn-download:hover {
+  background-color: #0c2e28;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .admissions-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .option-card {
+    width: 100%;
+    max-width: 380px;
+  }
+}
+
+/* Remove underline for the card links */
+.card-link-wrapper {
+  text-decoration: none; /* Remove underline from the Link */
+  color: inherit;        /* Ensure text color inside Link stays same */
+  display: block;        /* Make sure the whole card is clickable */
+}
+
+/* Optional: Remove underline on hover too */
+.card-link-wrapper:hover {
+  text-decoration: none;
+}
+
+

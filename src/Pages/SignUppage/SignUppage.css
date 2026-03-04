@@ -1,0 +1,112 @@
+/* src/components/SignUpForm/SignUpForm.css */
+
+/* 1. Main Container – Soft Cream Background */
+.elight-container {
+  background: #fffdf4; /* Soft cream for elight feel */
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+/* 2. Card */
+.elight-card {
+  width: 100%;
+  max-width: 450px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); /* Light shadow for airy feel */
+}
+
+/* 3. Form Labels */
+.form-label {
+  color: #999999;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+/* 4. Inputs */
+.form-control {
+  background-color: #fdfdfd;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 14px;
+  color: #000;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #7cff00; /* Lime green accent */
+  box-shadow: 0 0 0 0.2rem rgba(124, 255, 0, 0.15);
+}
+
+.form-control::placeholder {
+  color: #cccccc;
+}
+
+/* 5. Checkbox */
+.form-check-label {
+  color: #999999;
+}
+
+.form-check-input {
+  border-radius: 6px;
+}
+
+.form-check-input:checked {
+  background-color: #7cff00;
+  border-color: #7cff00;
+}
+
+/* 6. Buttons */
+.btn-elight {
+  background-color: #7cff00;
+  border: none;
+  color: #000;
+  font-weight: 600;
+  padding: 14px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.btn-elight:hover {
+  background-color: #5ed400;
+  color: #fff;
+}
+
+.btn-outline-elight {
+  background-color: #ffffff;
+  border: 2px solid #7cff00;
+  color: #7cff00;
+  font-weight: 600;
+  padding: 14px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-elight:hover {
+  background-color: #7cff00;
+  color: #fff;
+}
+
+/* 7. Alert (Error messages) */
+.alert-danger {
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #b71c1c; /* Red text */
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1rem;
+}
+
+/* 8. Links */
+.elight-card a {
+  text-decoration: none;
+  color: #7cff00;
+  transition: color 0.3s ease;
+}
+
+.elight-card a:hover {
+  color: #5ed400;
+}

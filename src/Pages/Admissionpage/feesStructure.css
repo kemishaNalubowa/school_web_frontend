@@ -1,0 +1,163 @@
+/* --- Page Layout --- */
+.fees-page {
+    background-color: #FEFFD3; /* Cream */
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+/* --- Hero Section --- */
+.fees-hero {
+    background: linear-gradient(to right, #071f1a, #0f3d33);
+    color: #ffffff;
+    padding: 120px 0 80px;
+    text-align: center;
+    border-bottom-left-radius: 60px;
+    border-bottom-right-radius: 60px;
+    margin-bottom: 60px;
+}
+
+.fees-hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #7CFF00;
+}
+
+/* --- Content --- */
+.fees-content {
+    padding-bottom: 80px;
+}
+
+.fees-intro h2 {
+    color: #0f3d33;
+    margin-bottom: 10px;
+}
+
+/* --- Fees Table Card --- */
+.fees-table-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    overflow-x: auto;
+    margin-bottom: 50px;
+    transition: 0.3s ease;
+}
+
+.fees-table-card:hover {
+    transform: translateY(-5px);
+}
+
+.custom-fees-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.custom-fees-table th {
+    background: #071f1a;
+    color: #ffffff;
+    padding: 18px;
+    text-align: left;
+    font-size: 1rem;
+}
+
+.custom-fees-table td {
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+}
+
+.custom-fees-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* --- Payment Section --- */
+.payment-section {
+    margin-bottom: 50px;
+}
+
+.payment-section h3 {
+    color: #0f3d33;
+    margin-bottom: 25px;
+}
+
+/* --- Payment Cards --- */
+.payment-cards {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.payment-card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 15px;
+    border-left: 6px solid #7CFF00;
+    flex: 1;
+    min-width: 250px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: 0.3s ease;
+}
+
+.payment-card:hover {
+    transform: translateY(-5px);
+}
+
+.payment-card h5 {
+    color: #071f1a;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.payment-card p {
+    margin: 0;
+    color: #555;
+}
+
+/* --- Download Section --- */
+.download-section {
+    background: linear-gradient(to right, #071f1a, #0f3d33);
+    padding: 50px;
+    border-radius: 20px;
+    margin-top: 60px;
+    color: #ffffff;
+    text-align: center;
+}
+
+.download-section h4 {
+    color: #7CFF00;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.download-btn {
+    background-color: #7CFF00;
+    border: none;
+    padding: 15px 35px;
+    font-size: 1.1rem;
+    margin-top: 20px;
+    border-radius: 40px;
+    font-weight: bold;
+    color: #071f1a;
+    transition: all 0.3s ease;
+}
+
+.download-btn:hover {
+    background-color: #a8ff4d;
+    transform: translateY(-4px);
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .custom-fees-table th, 
+    .custom-fees-table td {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .fees-hero h1 {
+        font-size: 2rem;
+    }
+}
+
+

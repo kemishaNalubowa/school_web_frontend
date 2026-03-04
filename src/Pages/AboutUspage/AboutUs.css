@@ -1,0 +1,253 @@
+/* --- Main Page Layout --- */
+.about-page {
+  background-color: #f9fbfa;
+  color: #1e1e1e;
+  overflow-x: hidden;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* --- Hero Section --- */
+.about-hero {
+  background: linear-gradient(135deg, #071F1A 0%, #0c2e28 100%);
+  color: #ffffff;
+  padding: 120px 0 80px;
+  text-align: center;
+  margin-bottom: 80px;
+  position: relative;
+}
+
+.about-hero h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+  color: #FEFFD3;
+  letter-spacing: 1px;
+}
+
+.about-hero p {
+  font-size: 1.3rem;
+  max-width: 700px;
+  margin: 0 auto;
+  color: #d6d6d6;
+  line-height: 1.6;
+}
+
+/* Subtle glow line */
+.about-hero::after {
+  content: "";
+  width: 100px;
+  height: 4px;
+  background: #7CFF00;
+  display: block;
+  margin: 30px auto 0;
+  border-radius: 3px;
+}
+
+/* --- Content Wrapper --- */
+.about-content-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 60px;
+  align-items: center;
+  margin-bottom: 100px;
+  padding: 0 40px;
+}
+
+.about-image-box {
+  flex: 1;
+  min-width: 300px;
+}
+
+.about-image-box img {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 25px 50px rgba(7, 31, 26, 0.15);
+  transition: transform 0.4s ease;
+}
+
+.about-image-box img:hover {
+  transform: scale(1.03);
+}
+
+.about-text-box {
+  flex: 1;
+  min-width: 300px;
+}
+
+.about-text-box h2 {
+  color: #071F1A;
+  margin-bottom: 25px;
+  font-weight: 800;
+  font-size: 2rem;
+  position: relative;
+}
+
+.about-text-box h2::after {
+  content: "";
+  width: 60px;
+  height: 3px;
+  background: #7CFF00;
+  display: block;
+  margin-top: 10px;
+}
+
+.about-text-box p {
+  font-size: 1.15rem;
+  line-height: 1.9;
+  color: #444;
+}
+
+/* --- Button --- */
+.about-btn {
+  background: #7CFF00;
+  color: #071F1A;
+  border: none;
+  padding: 14px 35px;
+  border-radius: 30px;
+  font-weight: 700;
+  margin-top: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 25px rgba(124, 255, 0, 0.35);
+}
+
+.about-btn:hover {
+  background: #a8ff4d;
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(124, 255, 0, 0.45);
+}
+
+/* --- Mission & Vision Section --- */
+.mission-vision-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-bottom: 120px;
+  justify-content: center;
+  padding: 0 40px;
+}
+
+.mv-card {
+  flex: 1;
+  min-width: 300px;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 15px;
+  border-top: 5px solid #7CFF00;
+  box-shadow: 0 20px 40px rgba(7, 31, 26, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.mv-card:hover {
+  transform: translateY(-10px);
+}
+
+.mv-card h3 {
+  color: #071F1A;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.mv-card p {
+  line-height: 1.8;
+  color: #555;
+}
+
+/* --- Team Section --- */
+.team-section {
+  margin-bottom: 100px;
+  padding: 0 40px;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.8rem;
+  color: #071F1A;
+  margin-bottom: 70px;
+  font-weight: 800;
+  position: relative;
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  width: 90px;
+  height: 4px;
+  background-color: #7CFF00;
+  margin: 20px auto 0;
+  border-radius: 2px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 40px;
+}
+
+.team-card {
+  text-align: center;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  transition: all 0.4s ease;
+  box-shadow: 0 15px 35px rgba(7, 31, 26, 0.07);
+}
+
+.team-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 25px 45px rgba(7, 31, 26, 0.15);
+}
+
+.team-img-wrapper {
+  width: 130px;
+  height: 130px;
+  margin: 0 auto 25px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #7CFF00;
+  box-shadow: 0 10px 20px rgba(124, 255, 0, 0.3);
+}
+
+.team-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.team-card h4 {
+  color: #071F1A;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.team-card p {
+  color: #7CFF00;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* --- Footer --- */
+.footer {
+  background: linear-gradient(135deg, #071F1A 0%, #0c2e28 100%);
+  color: #FEFFD3;
+  text-align: center;
+  padding: 40px 0;
+  font-size: 0.95rem;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .about-hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .about-content-wrapper,
+  .mission-vision-section,
+  .team-section {
+    padding: 0 20px;
+  }
+}

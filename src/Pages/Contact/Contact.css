@@ -1,0 +1,157 @@
+/* ==============================
+   --- Contact Page CSS ---
+   ============================== */
+.contact-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #FEFFD3 0%, #f5f7fa 100%);
+    font-family: Arial, sans-serif;
+    padding: 60px 20px;
+}
+
+.split-layout {
+    display: flex;
+    gap: 40px;
+    max-width: 1200px;
+    margin: auto;
+    flex-wrap: wrap;
+}
+
+/* --- Left Side: Form --- */
+.contact-form-side {
+    flex: 1;
+    min-width: 320px;
+}
+
+.form-wrapper {
+    background: #071f1a;
+    color: #cccccc;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.form-wrapper:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.form-wrapper h1 {
+    color: #7CFF00;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.form-wrapper p.lead {
+    color: #aaaaaa;
+    margin-bottom: 30px;
+}
+
+/* --- Form Inputs --- */
+.custom-input {
+    border-radius: 12px;
+    border: 1px solid #7CFF00;
+    padding: 10px 15px;
+    background: #0f3d33;
+    color: #ffffff;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+.custom-input:focus {
+    border-color: #a8ff4d;
+    box-shadow: 0 0 8px rgba(124, 255, 0, 0.6);
+    background: #0b2a23;
+    color: #ffffff;
+}
+
+/* --- Submit Button --- */
+.submit-btn {
+    background-color: #7CFF00;
+    color: #071f1a;
+    font-weight: 700;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.submit-btn:hover {
+    background-color: #a8ff4d;
+    transform: scale(1.05);
+}
+
+/* --- Right Side: Info Cards & Map --- */
+.contact-info-side {
+    flex: 1;
+    min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* --- Floating Info Cards --- */
+.info-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.info-card {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    background: #0f3d33;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    background: #071f1a;
+}
+
+.icon-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #7CFF00;
+    color: #071f1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+/* Info Card Text */
+.info-card h5 {
+    margin: 0 0 5px;
+    color: #7CFF00;
+}
+
+.info-card p {
+    margin: 0;
+    color: #cccccc;
+}
+
+/* --- Map Container --- */
+.map-container {
+    height: 300px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 992px) {
+    .split-layout { flex-direction: column; }
+    .map-container { height: 250px; }
+}
+
+@media (max-width: 576px) {
+    .form-wrapper { padding: 30px 20px; }
+    .submit-btn { width: 100%; }
+}

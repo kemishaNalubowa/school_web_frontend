@@ -1,0 +1,72 @@
+.admission-section {
+  position: relative;
+  background-color: #146C38;   /* Deep green */
+  color: #FFFFFF;
+  padding: 80px 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Top brown strip */
+.admission-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 6px;
+  width: 100%;
+  background-color: #8B5A2B;   /* Brown accent */
+}
+
+.admission-content {
+  max-width: 600px;
+}
+
+.admission-content h2 {
+  font-size: 40px;
+  margin-bottom: 25px;
+  color: #FEFFD3;   /* Your cream */
+}
+
+.admission-line {
+  width: 70%;
+  height: 1px;
+  background-color: #FEFFD3;   /* Cream line */
+  margin-bottom: 25px;
+}
+
+.admission-content p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #F5F5F5;  /* Slightly soft white */
+}
+
+/* Button */
+.read-more-btn {
+  background: transparent;
+  border: 2px solid #FEFFD3;   /* Cream border */
+  padding: 14px 40px;
+  color: #FEFFD3;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.read-more-btn:hover {
+  background-color: #FEFFD3;
+  color: #146C38;
+}
+
+/* Floating pill */
+.admissions-pill {
+  position: absolute;
+  bottom: -25px;
+  right: 80px;
+  background-color: #FEFFD3;   /* Cream */
+  color: #146C38;              /* Green text */
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-weight: 500;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}

@@ -1,0 +1,133 @@
+/* ==============================
+   --- Gallery Page Layout ---
+   ============================== */
+.gallery-page {
+    background: linear-gradient(135deg, #FEFFD3 0%, #f5f7fa 100%);
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+/* --- Hero Section --- */
+.gallery-hero {
+    background: linear-gradient(to right, #071f1a, #0f3d33);
+    color: #ffffff;
+    padding: 120px 20px 80px;
+    text-align: center;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    margin-bottom: 60px;
+    position: relative;
+}
+
+.gallery-hero h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #7CFF00;
+}
+
+/* --- Masonry Grid Layout --- */
+.masonry-grid {
+    column-count: 3;
+    column-gap: 20px;
+}
+
+.masonry-item {
+    break-inside: avoid;
+    margin-bottom: 20px;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.masonry-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* Image Styles */
+.masonry-item img {
+    width: 100%;
+    display: block;
+    transition: transform 0.5s ease;
+    border-radius: 15px;
+}
+
+/* Arbitrary height classes for masonry effect */
+.item-0 img { height: 300px; object-fit: cover; }
+.item-1 img { height: 400px; object-fit: cover; }
+.item-2 img { height: 250px; object-fit: cover; }
+
+/* Hover Overlay with neon accent */
+.image-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to top, rgba(7,31,26,0.8), transparent);
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+    color: #7CFF00;
+    transition: opacity 0.4s ease;
+}
+
+.masonry-item:hover .image-overlay {
+    opacity: 1;
+}
+
+.masonry-item:hover img {
+    transform: scale(1.1);
+}
+
+.image-overlay h3 {
+    margin: 0;
+    font-weight: 700;
+    transform: translateY(20px);
+    transition: transform 0.4s;
+}
+
+.image-overlay span {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    transform: translateY(20px);
+    transition: transform 0.5s;
+}
+
+.masonry-item:hover .image-overlay h3,
+.masonry-item:hover .image-overlay span {
+    transform: translateY(0);
+}
+
+/* --- Lightbox Modal --- */
+.lightbox-modal .modal-content {
+    background: transparent;
+    border: none;
+}
+
+.lightbox-content img {
+    width: 100%;
+    border-radius: 15px;
+}
+
+.lightbox-caption {
+    text-align: center;
+    padding: 15px;
+    background: #071f1a;
+    color: #7CFF00;
+    margin-top: -5px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 992px) {
+    .masonry-grid { column-count: 2; }
+}
+
+@media (max-width: 576px) {
+    .masonry-grid { column-count: 1; }
+    .gallery-hero { padding: 100px 20px 60px; }
+}

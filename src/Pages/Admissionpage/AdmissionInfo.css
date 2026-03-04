@@ -1,0 +1,211 @@
+/* PAGE BACKGROUND */
+.admission-info-page {
+  background-color: #FEFFD3; /* Cream */
+  font-family: Arial, sans-serif;
+  color: #071f1a;
+}
+
+/* HERO SECTION */
+.info-hero {
+  background: linear-gradient(to right, #071f1a, #0f3d33);
+  padding: 100px 0;
+  text-align: center;
+  color: #ffffff;
+}
+
+.info-hero h1 {
+  font-size: 48px;
+  font-weight: bold;
+  color: #7CFF00;
+}
+
+.info-hero p {
+  font-size: 18px;
+  margin-top: 15px;
+  color: #dddddd;
+}
+
+/* MAIN CONTENT */
+.info-content {
+  padding: 80px 0;
+}
+
+/* SECTION INTRO */
+.info-section h2 {
+  font-size: 32px;
+  color: #0f3d33;
+  margin-bottom: 20px;
+}
+
+.info-section .lead {
+  max-width: 700px;
+  margin: auto;
+  font-size: 16px;
+  color: #333;
+}
+
+/* CARDS */
+.info-card {
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  margin-top: 50px;
+  overflow: hidden;
+  transition: 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+}
+
+/* CARD HEADER */
+.info-card-header {
+  background-color: #7CFF00;
+  padding: 20px;
+  color: #071f1a;
+}
+
+.info-card-header.bg-dark {
+  background: linear-gradient(to right, #071f1a, #0f3d33);
+  color: #7CFF00;
+}
+
+.info-card-header h3 {
+  margin: 0;
+  font-weight: bold;
+}
+
+/* CARD BODY */
+.info-card-body {
+  padding: 30px;
+}
+
+/* CHECK LIST */
+.check-list {
+  list-style: none;
+  padding: 0;
+}
+
+.check-list li {
+  margin-bottom: 12px;
+  padding-left: 25px;
+  position: relative;
+  font-size: 15px;
+}
+
+.check-list li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  color: #7CFF00;
+  font-weight: bold;
+}
+
+/* PROCESS STEPS */
+.process-steps {
+  display: grid;
+  gap: 20px;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+}
+
+.step-number {
+  background: #7CFF00;
+  color: #071f1a;
+  font-weight: bold;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+.step-text h5 {
+  margin: 0;
+  font-weight: bold;
+}
+
+.step-text p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* AGE TABLE */
+.age-criteria-section {
+  margin-top: 60px;
+}
+
+.age-criteria-section h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #0f3d33;
+}
+
+.age-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+
+.age-table th {
+  background: #071f1a;
+  color: #7CFF00;
+  padding: 15px;
+}
+
+.age-table td {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.age-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* DOWNLOAD SECTION */
+.download-section {
+  margin-top: 80px;
+  padding: 50px;
+  background: linear-gradient(to right, #071f1a, #0f3d33);
+  border-radius: 15px;
+  color: white;
+}
+
+.download-section h4 {
+  color: #7CFF00;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.download-btn {
+  margin-top: 20px;
+  padding: 12px 30px;
+  background-color: #7CFF00;
+  border: none;
+  border-radius: 30px;
+  font-weight: bold;
+  color: #071f1a;
+  transition: 0.3s;
+}
+
+.download-btn:hover {
+  background-color: #a8ff4d;
+}
+
+/* FOOTER */
+.footer {
+  margin-top: 80px;
+  background: #071f1a;
+  color: #cccccc;
+  text-align: center;
+  padding: 20px 0;
+}
