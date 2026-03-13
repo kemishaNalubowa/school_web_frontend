@@ -1,9 +1,9 @@
-import React, { useEffect, } from "react"; // Added useEffect and useRef
-import { Container, Button } from "react-bootstrap";
+import React, { useEffect } from "react";
+import { Container } from "react-bootstrap";
 import "./Events.css";
 
 const Events = () => {
-  // Updated Data with Images
+  // Event Data
   const eventsData = [
     {
       id: 1,
@@ -14,7 +14,7 @@ const Events = () => {
       time: "9:00 AM - 1:00 PM",
       location: "Main Hall",
       category: "Academic",
-      image: "/graduation.jpeg" 
+      image: "/graduation.jpeg"
     },
     {
       id: 2,
@@ -51,7 +51,7 @@ const Events = () => {
     },
   ];
 
-  // Animation Logic: Watch for scroll
+  // Animation Logic: Intersection Observer for scroll-triggered animations
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -61,14 +61,12 @@ const Events = () => {
           }
         });
       },
-      { threshold: 0.1 } // Trigger when 10% of item is visible
+      { threshold: 0.1 }
     );
 
-    // Select all items with the class 'timeline-item'
     const items = document.querySelectorAll(".timeline-item");
     items.forEach((item) => observer.observe(item));
 
-    // Cleanup observer
     return () => {
       items.forEach((item) => observer.unobserve(item));
     };
@@ -87,42 +85,55 @@ const Events = () => {
 
       <Container className="events-container">
         
+        {/* Intro Section */}
         <div className="events-intro text-center">
           <h2>Upcoming Events</h2>
           <p>From academic fairs to cultural festivals, there is always something thrilling happening.</p>
         </div>
 
-        {/* Vertical Timeline */}
+        {/* Timeline Events List */}
         <div className="timeline">
-          {eventsData.map((event, index) => (
-            <div 
-              key={event.id} 
-              className={`timeline-item ${index % 2 === 0 ? 'left' : 'right'}`}
-            >
-              {/* The Date Badge */}
+          {eventsData.map((event) => (
+            <div key={event.id} className="timeline-item">
+              
+              {/* ✨ Hand Pointer with Glowing Light */}
+              <div className="hand-pointer" aria-hidden="true">👆</div>
+              
+              {/* Date Badge */}
               <div className="timeline-badge">
                 <span className="date">{event.date}</span>
                 <span className="month">{event.month}</span>
               </div>
-
-              {/* The Content Card */}
+              
+              {/* Content Card */}
               <div className="timeline-content">
                 
+                {/* Image Side */}
                 <div className="event-image-wrapper">
-                  <img src={event.image} alt={event.title} className="event-image" />
+                  <img 
+                    src={event.image} 
+                    alt={event.title} 
+                    className="event-image"
+                    loading="lazy"
+                  />
                   <span className="image-category-tag">{event.category}</span>
                 </div>
-
+                
+                {/* Text Side - Thrilling Words */}
                 <div className="event-body">
                   <h3>{event.title}</h3>
                   <p>{event.description}</p>
+                  
                   <div className="event-meta">
-                    <span><i className="icon">🕐</i> {event.time}</span>
-                    <span><i className="icon">📍</i> {event.location}</span>
+                    <span className="meta-tag">📍 {event.location}</span>
+                    <span className="meta-tag">🕐 {event.time}</span>
                   </div>
-                  <Button className="event-btn">View Details</Button>
+                  
+                  <button className="event-btn">
+                    Register Now <span>→</span>
+                  </button>
                 </div>
-
+                
               </div>
             </div>
           ))}
@@ -130,6 +141,7 @@ const Events = () => {
 
       </Container>
 
+      {/* Footer */}
       <footer className="footer">
         <Container>
           <p>&copy; {new Date().getFullYear()} JOKS SCHOOL CONNECT. All Rights Reserved.</p>

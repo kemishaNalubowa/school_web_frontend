@@ -1,186 +1,460 @@
-// src/Pages/signInForm/signInpage.js
+// src/Pages/signInForm/SignInPage.js
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Container, Row, Col, Form, Button, Card, Alert, Spinner } from 'react-bootstrap';
+import { Container, Form, Button, Card, Alert } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import { FaEye, FaEyeSlash, FaChevronDown } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaPhone, FaLock, FaUser, FaBuilding, FaGraduationCap, FaChalkboardTeacher } from 'react-icons/fa';
 import axios from 'axios';
-import './SignInpage.css';
+import './SignInPage.css';
 
-const LoginPage = () => {
+const SignInPage = () => {
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(true);
-  const [formData, setFormData] = useState({ name: '', email: '', password: '', role: 'Parent' });
+  
+  // Form mode: 'login' or 'signup'
+  const [formMode, setFormMode] = useState('login');
+  
+  // Form data
+  const [formData, setFormData] = useState({ 
+    name: '', 
+    phone: '', 
+    password: '', 
+    role: 'Parent',
+    schoolCode: '' 
+  });
+  
+  // UI states
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  
+  // Track which fields have been touched
+  const [touched, setTouched] = useState({
+    name: false,
+    phone: false,
+    password: false,
+    schoolCode: false
+  });
 
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    // Clear error when user starts typing
+    if (error) setError('');
   };
 
-  const toggleShowPassword = () => setShowPassword(prev => !prev);
-  const toggleForm = () => { setIsLogin(!isLogin); setError(''); };
+  // Handle field blur (mark as touched)
+  const handleBlur = (fieldName) => {
+    setTouched(prev => ({ ...prev, [fieldName]: true }));
+  };
 
+  // Handle role selection
+  const handleRoleSelect = (e) => {
+    setFormData(prev => ({ ...prev, role: e.target.value }));
+  };
+
+  // Toggle password visibility
+  const toggleShowPassword = () => setShowPassword(prev => !prev);
+
+  // Toggle between login and signup
+  const toggleFormMode = () => {
+    setFormMode(prev => prev === 'login' ? 'signup' : 'login');
+    setError('');
+    setTouched({ name: false, phone: false, password: false, schoolCode: false });
+    setFormData({ name: '', phone: '', password: '', role: 'Parent', schoolCode: '' });
+  };
+
+  // Validate Uganda phone number
+  const isValidPhone = (phone) => {
+    const cleaned = phone.replace(/\s/g, '');
+    return /^(\+256|0)[7-9]\d{8}$/.test(cleaned);
+  };
+
+  // Validate form fields with SPECIFIC messages
+  const validateForm = () => {
+    // Phone validation (required for both)
+    if (!formData.phone.trim()) {
+      return 'Phone number is required';
+    }
+    if (!isValidPhone(formData.phone)) {
+      return 'Enter a valid Uganda phone number (e.g., +256 772 123 456)';
+    }
+
+    // Password validation (required for both)
+    if (!formData.password) {
+      return 'Password is required';
+    }
+    if (formData.password.length < 6) {
+      return 'Password must be at least 6 characters';
+    }
+
+    // Signup-specific validation
+    if (formMode === 'signup') {
+      if (!formData.name.trim()) {
+        return 'Full name is required';
+      }
+      if (formData.name.trim().length < 3) {
+        return 'Name must be at least 3 characters';
+      }
+      if (!formData.schoolCode.trim()) {
+        return 'School registration code is required';
+      }
+    }
+
+    return null; // No errors
+  };
+
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    if (!formData.email || !formData.password) {
-      setError('Please enter both email and password.');
+
+    // Validate form BEFORE calling API
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      toast.error(validationError);
       return;
     }
+
     setLoading(true);
 
     try {
-      const endpoint = isLogin 
+      const endpoint = formMode === 'login' 
         ? 'http://localhost:5000/api/v1/auth/login' 
         : 'http://localhost:5000/api/v1/auth/signup';
-        
-      const res = await axios.post(endpoint, formData);
-      const { access_token, user } = res.data;
+      
+      const payload = formMode === 'login'
+        ? { 
+            phone: formData.phone.replace(/\s/g, ''), 
+            password: formData.password, 
+            role: formData.role 
+          }
+        : { 
+            name: formData.name.trim(),
+            phone: formData.phone.replace(/\s/g, ''), 
+            password: formData.password, 
+            role: formData.role,
+            schoolCode: formData.schoolCode.trim()
+          };
+
+      console.log('Sending request to:', endpoint);
+      console.log('Payload:', payload);
+
+      const res = await axios.post(endpoint, payload);
+      const { access_token, user, message } = res.data;
+      
+      // Store auth data
       localStorage.setItem('access_token', access_token);
       localStorage.setItem('user', JSON.stringify(user));
-      toast.success(`Welcome to Joks School Connect!`);
-      navigate('/dashboard/profile');
+      
+      // ✅ DIFFERENT SUCCESS MESSAGES
+      if (formMode === 'login') {
+        toast.success(`Signed in successfully! Welcome back, ${user?.name || 'User'}! 🎉`);
+      } else {
+        toast.success(`Account created successfully! Welcome, ${user?.name || 'User'}! 🎉`);
+      }
+      
+      // Navigate to home or dashboard
+      setTimeout(() => {
+        navigate('/');
+      }, 1000);
+      
     } catch (err) {
-      const message = err.response?.data?.error || 'Operation failed';
-      setError(message);
+      console.error('Error:', err);
+      
+      // ✅ SPECIFIC ERROR MESSAGES
+      let errorMessage = 'Operation failed. Please try again.';
+      
+      if (err.response) {
+        // Backend returned an error
+        errorMessage = err.response.data?.error || err.response.data?.message || 'Invalid credentials';
+        
+        // Specific error handling
+        if (err.response.status === 400) {
+          errorMessage = 'Invalid phone number or password';
+        } else if (err.response.status === 401) {
+          errorMessage = 'Incorrect phone number or password';
+        } else if (err.response.status === 404) {
+          errorMessage = 'Account not found. Please create an account first.';
+        } else if (err.response.status === 409) {
+          errorMessage = 'Account already exists. Please sign in instead.';
+        } else if (err.response.status === 500) {
+          errorMessage = 'Server error. Please try again later.';
+        }
+      } else if (err.request) {
+        // Request was made but no response
+        errorMessage = 'No response from server. Please check your connection.';
+      } else if (err.message) {
+        errorMessage = err.message;
+      }
+      
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Container
-      className="login-container d-flex justify-content-center align-items-center"
-      style={{ paddingTop: "12rem", paddingBottom: "5rem", paddingLeft: "0rem", backgroundColor: "#FEFFD3", minHeight: "100vh" }}
-    >
-      <Row className="w-100 justify-content-center">
-        <Col xs={12} md={6} lg={5}>
-          <Card
-            className="p-4 shadow login-card"
-            style={{ background: 'linear-gradient(to right, #071f1a, #0f3d33)', border: 'none', borderRadius: '15px' }}
-          >
-            {/* Card Title */}
-            <h3 className="text-center mb-4 login-title" style={{ color: '#7CFF00' }}>
-              {isLogin ? 'Sign In' : 'Sign Up'} to Joks School
-            </h3>
+    <div className="signin-page">
+      
+      {/* ✨ Animated Background */}
+      <div className="signin-bg" aria-hidden="true">
+        <div className="bg-orb orb-1"></div>
+        <div className="bg-orb orb-2"></div>
+        <div className="bg-orb orb-3"></div>
+        <div className="bg-grid"></div>
+      </div>
 
-            {error && <Alert variant="danger">{error}</Alert>}
+      <Container className="signin-container">
+        <div className="signin-wrapper">
+          
+          {/* ✨ Main Card */}
+          <Card className="signin-card">
+            
+            {/* Decorative Top Bar */}
+            <div className="card-top-bar"></div>
+            
+            <Card.Body className="p-4 p-md-5">
+              
+              {/* Header - Centered */}
+              <div className="signin-header text-center mb-4">
+                <div className="logo-wrapper">
+                  <div className="logo-icon">
+                    <FaGraduationCap />
+                  </div>
+                </div>
+                <h1 className="signin-title">
+                  {formMode === 'login' ? 'Welcome Back!' : 'Create Account'}
+                </h1>
+                <p className="signin-subtitle">
+                  {formMode === 'login' 
+                    ? 'Sign in to access your account' 
+                    : 'Register to get started'}
+                </p>
+              </div>
 
-            <Form onSubmit={handleSubmit}>
-              {/* Name Field - Only for Signup */}
-              {!isLogin && (
-                <Form.Group className="mb-3">
-                  <Form.Label style={{ color: '#cccccc' }}>Full Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Enter your full name"
-                    required
-                    style={{ backgroundColor: '#fff', color: '#000' }}
-                  />
+              {/* Error Alert */}
+              {error && (
+                <Alert 
+                  variant="danger" 
+                  className="error-alert mb-4"
+                  dismissible 
+                  onClose={() => setError('')}
+                >
+                  {error}
+                </Alert>
+              )}
+
+              <Form onSubmit={handleSubmit}>
+                
+                {/* Full Name - Signup Only */}
+                {formMode === 'signup' && (
+                  <Form.Group className="form-group">
+                    <Form.Label>
+                      Full Name <span className="required">*</span>
+                    </Form.Label>
+                    <div className="input-wrapper">
+                      <FaUser className="input-icon" />
+                      <Form.Control
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        onBlur={() => handleBlur('name')}
+                        placeholder="Enter your full name"
+                        required
+                        className={`custom-input ${touched.name && !formData.name ? 'input-error' : ''}`}
+                        isInvalid={touched.name && !formData.name}
+                      />
+                    </div>
+                    {touched.name && !formData.name && (
+                      <Form.Text className="text-danger small">
+                        Name is required
+                      </Form.Text>
+                    )}
+                  </Form.Group>
+                )}
+
+                {/* Phone Number */}
+                <Form.Group className="form-group">
+                  <Form.Label>
+                    Phone Number <span className="required">*</span>
+                  </Form.Label>
+                  <div className="input-wrapper">
+                    <FaPhone className="input-icon" />
+                    <Form.Control
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      onBlur={() => handleBlur('phone')}
+                      placeholder="+256 7XX XXX XXX"
+                      required
+                      className={`custom-input ${touched.phone && !isValidPhone(formData.phone) ? 'input-error' : ''}`}
+                      isInvalid={touched.phone && formData.phone && !isValidPhone(formData.phone)}
+                    />
+                  </div>
+                  <Form.Text className="input-hint">
+                    Use your registered school phone number
+                  </Form.Text>
+                  {touched.phone && formData.phone && !isValidPhone(formData.phone) && (
+                    <Form.Text className="text-danger small">
+                      Invalid format. Example: +256 772 123 456
+                    </Form.Text>
+                  )}
                 </Form.Group>
-              )}
 
-              {/* Email */}
-              <Form.Group className="mb-3">
-                <Form.Label style={{ color: '#cccccc' }}>Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Enter your Email"
-                  required
-                  style={{ backgroundColor: '#fff', color: '#000' }}
-                />
-              </Form.Group>
+                {/* School Code - Signup Only */}
+                {formMode === 'signup' && (
+                  <Form.Group className="form-group">
+                    <Form.Label>
+                      School Code <span className="required">*</span>
+                    </Form.Label>
+                    <div className="input-wrapper">
+                      <FaBuilding className="input-icon" />
+                      <Form.Control
+                        type="text"
+                        name="schoolCode"
+                        value={formData.schoolCode}
+                        onChange={handleChange}
+                        onBlur={() => handleBlur('schoolCode')}
+                        placeholder="Enter code from school"
+                        required
+                        className={`custom-input ${touched.schoolCode && !formData.schoolCode ? 'input-error' : ''}`}
+                        isInvalid={touched.schoolCode && !formData.schoolCode}
+                      />
+                    </div>
+                    {touched.schoolCode && !formData.schoolCode && (
+                      <Form.Text className="text-danger small">
+                        School code is required
+                      </Form.Text>
+                    )}
+                  </Form.Group>
+                )}
 
-              {/* Password with Independent Eye Icon */}
-              <Form.Group className="mb-3">
-                <Form.Label style={{ color: '#cccccc' }}>Password</Form.Label>
-                <div className="password-input-wrapper">
-                  <Form.Control
-                    type={showPassword ? 'text' : 'password'}
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder="Enter password"
-                    required
-                    style={{ backgroundColor: '#fff', color: '#000' }}
-                  />
-                  <Button
-                    variant="outline-secondary"
-                    className="eye-btn-inside"
-                    onClick={toggleShowPassword}
-                  >
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
-                  </Button>
-                </div>
-              </Form.Group>
+                {/* Password */}
+                <Form.Group className="form-group">
+                  <Form.Label>
+                    Password <span className="required">*</span>
+                  </Form.Label>
+                  <div className="input-wrapper password-wrapper">
+                    <FaLock className="input-icon" />
+                    <Form.Control
+                      type={showPassword ? 'text' : 'password'}
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      onBlur={() => handleBlur('password')}
+                      placeholder="••••••••"
+                      required
+                      className={`custom-input ${touched.password && formData.password.length < 6 ? 'input-error' : ''}`}
+                      isInvalid={touched.password && formData.password.length > 0 && formData.password.length < 6}
+                      minLength={6}
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      className="toggle-password"
+                      onClick={toggleShowPassword}
+                    >
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </Button>
+                  </div>
+                  {touched.password && formData.password.length > 0 && formData.password.length < 6 && (
+                    <Form.Text className="text-danger small">
+                      Password must be at least 6 characters
+                    </Form.Text>
+                  )}
+                  {formMode === 'login' && (
+                    <div className="forgot-link-wrapper">
+                      <Link to="/forgot-password" className="forgot-link">
+                        Forgot password?
+                      </Link>
+                    </div>
+                  )}
+                </Form.Group>
 
-              {/* Role Dropdown */}
-              <Form.Group className="mb-3">
-                <Form.Label style={{ color: '#cccccc' }}>Role</Form.Label>
-                <div className="select-wrapper">
-                  <Form.Select
-                    name="role"
-                    value={formData.role}
-                    onChange={handleChange}
-                    style={{ backgroundColor: '#fff', color: '#000' }}
-                  >
-                    <option value="Parent">Parent</option>
-                    <option value="Teacher">Teacher</option>
-                    <option value="Admin">Admin</option>
-                  </Form.Select>
-                  <FaChevronDown className="dropdown-icon" />
-                </div>
-              </Form.Group>
+                {/* Role Dropdown */}
+                <Form.Group className="form-group">
+                  <Form.Label>
+                    I am a <span className="required">*</span>
+                  </Form.Label>
+                  <div className="input-wrapper">
+                    <FaUser className="input-icon" />
+                    <Form.Select
+                      name="role"
+                      value={formData.role}
+                      onChange={handleRoleSelect}
+                      className="custom-input"
+                      style={{ paddingLeft: '52px' }}
+                    >
+                      <option value="Parent">Parent</option>
+                      <option value="Teacher">Teacher</option>
+                      <option value="Admin">Admin</option>
+                    </Form.Select>
+                  </div>
+                </Form.Group>
 
-              {/* Submit Button - Centered Text */}
-              <Button
-                type="submit"
-                className="w-100 mb-3 d-flex justify-content-center align-items-center"
-                disabled={loading}
-                style={{
-                  backgroundColor: '#7CFF00',
-                  borderColor: '#7CFF00',
-                  color: '#000',
-                  fontWeight: 'bold',
-                  gap: '8px'
-                }}
-              >
-                {loading && <Spinner animation="border" size="sm" />}
-                <span>{isLogin ? 'Sign In' : 'Sign Up'}</span>
-              </Button>
+                {/* Submit Button */}
+                <Button
+                  type="submit"
+                  className="submit-btn mt-4"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                      Processing...
+                    </>
+                  ) : (
+                    <>
+                      {formMode === 'login' ? 'Sign In' : 'Create Account'}
+                      <span className="btn-arrow">→</span>
+                    </>
+                  )}
+                </Button>
 
-              {/* Remember Me & Forgot Password */}
-              {isLogin && (
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                  <Form.Check label="Remember Me" style={{ color: '#cccccc' }} />
-                  <Link to="/forgot-password" className="small" style={{ color: '#7CFF00' }}>
-                    Forgot password?
-                  </Link>
-                </div>
-              )}
-            </Form>
+              </Form>
 
-            {/* Toggle Link */}
-            <p className="text-center mt-3" style={{ color: '#cccccc' }}>
-              {isLogin ? "Don’t have an account?" : "Already have an account?"}{' '}
-              <span onClick={toggleForm} style={{ color: '#7CFF00', fontWeight: 'bold', cursor: 'pointer' }}>
-                {isLogin ? 'Create one' : 'Sign In'}
-              </span>
-            </p>
+              {/* Toggle Form Link */}
+              <div className="form-toggle text-center mt-4">
+                <span className="toggle-text">
+                  {formMode === 'login' ? "New to JOKS School?" : "Already have an account?"}
+                </span>
+                <button
+                  type="button"
+                  className="toggle-btn"
+                  onClick={toggleFormMode}
+                >
+                  {formMode === 'login' ? 'Create Account' : 'Sign In'}
+                </button>
+              </div>
+
+              {/* Trust Badges */}
+              <div className="trust-badges mt-4 pt-4 border-top">
+                <span className="badge">🔒 Secure</span>
+                <span className="badge">🇺🇬 Uganda</span>
+                <span className="badge">⚡ Fast</span>
+              </div>
+
+            </Card.Body>
           </Card>
-        </Col>
-      </Row>
-    </Container>
+
+          {/* Footer Links */}
+          <div className="signin-footer text-center mt-4">
+            <Link to="/privacy" className="footer-link">Privacy</Link>
+            <span className="divider">•</span>
+            <Link to="/terms" className="footer-link">Terms</Link>
+            <span className="divider">•</span>
+            <Link to="/help" className="footer-link">Help</Link>
+          </div>
+
+        </div>
+      </Container>
+    </div>
   );
 };
 
-export default LoginPage;
+export default SignInPage;

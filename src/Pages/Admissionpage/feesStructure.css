@@ -1,50 +1,96 @@
 /* --- Page Layout --- */
 .fees-page {
-    background-color: #FEFFD3; /* Cream */
+    background-color: var(--bg-light);
     min-height: 100vh;
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--dark-blue);
+    overflow-x: hidden;
 }
 
 /* --- Hero Section --- */
 .fees-hero {
-    background: linear-gradient(to right, #071f1a, #0f3d33);
-    color: #ffffff;
-    padding: 120px 0 80px;
+    background: var(--gradient-primary);
+    color: var(--white);
+    padding: 140px 0 100px;
     text-align: center;
-    border-bottom-left-radius: 60px;
-    border-bottom-right-radius: 60px;
-    margin-bottom: 60px;
+    border-bottom-left-radius: var(--radius-lg);
+    border-bottom-right-radius: var(--radius-lg);
+    margin-bottom: 80px;
+    position: relative;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+
+/* Subtle pattern overlay for texture */
+.fees-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    pointer-events: none;
 }
 
 .fees-hero h1 {
-    font-size: 3rem;
-    font-weight: 800;
-    color: #7CFF00;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 900;
+    color: var(--white);
+    text-shadow: 0 4px 10px rgba(30, 64, 175, 0.4);
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.fees-hero p {
+    color: var(--accent-soft);
+    font-size: 1.2rem;
+    position: relative;
+    z-index: 1;
 }
 
 /* --- Content --- */
 .fees-content {
     padding-bottom: 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.fees-intro {
+    text-align: center;
+    margin-bottom: 50px;
 }
 
 .fees-intro h2 {
-    color: #0f3d33;
-    margin-bottom: 10px;
+    color: var(--primary-dark);
+    margin-bottom: 15px;
+    font-weight: 800;
+    font-size: 2.5rem;
+}
+
+.fees-intro p {
+    color: var(--gray);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
 }
 
 /* --- Fees Table Card --- */
 .fees-table-card {
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    background: var(--white);
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
     overflow-x: auto;
-    margin-bottom: 50px;
-    transition: 0.3s ease;
+    margin-bottom: 60px;
+    transition: all var(--transition-normal);
+    border: 1px solid var(--accent-soft);
 }
 
 .fees-table-card:hover {
     transform: translateY(-5px);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+    border-color: var(--primary-light);
 }
 
 .custom-fees-table {
@@ -54,110 +100,209 @@
 }
 
 .custom-fees-table th {
-    background: #071f1a;
-    color: #ffffff;
-    padding: 18px;
+    background: var(--primary-dark);
+    color: var(--white);
+    padding: 20px;
     text-align: left;
     font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .custom-fees-table td {
-    padding: 16px;
-    border-bottom: 1px solid #eee;
-    color: #333;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--bg-light);
+    color: var(--dark-blue);
+    font-weight: 500;
+}
+
+.custom-fees-table tr:last-child td {
+    border-bottom: none;
 }
 
 .custom-fees-table tr:hover {
-    background-color: #f9f9f9;
+    background-color: var(--bg-light);
+    transition: background-color 0.2s ease;
+}
+
+/* Highlight specific columns if needed */
+.custom-fees-table tr td:first-child {
+    font-weight: 700;
+    color: var(--primary);
 }
 
 /* --- Payment Section --- */
 .payment-section {
-    margin-bottom: 50px;
+    margin-bottom: 60px;
 }
 
 .payment-section h3 {
-    color: #0f3d33;
-    margin-bottom: 25px;
+    color: var(--primary-dark);
+    margin-bottom: 30px;
+    font-weight: 700;
+    font-size: 1.8rem;
+    text-align: center;
 }
 
 /* --- Payment Cards --- */
 .payment-cards {
     display: flex;
-    gap: 25px;
+    gap: 30px;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .payment-card {
-    background: #ffffff;
-    padding: 25px;
-    border-radius: 15px;
-    border-left: 6px solid #7CFF00;
+    background: var(--white);
+    padding: 30px;
+    border-radius: var(--radius-md);
+    border-left: 6px solid var(--primary);
     flex: 1;
-    min-width: 250px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    transition: 0.3s ease;
+    min-width: 280px;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.payment-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 100px;
+    height: 100px;
+    background: var(--bg-light);
+    border-radius: 0 0 0 100%;
+    opacity: 0.5;
+    transition: all var(--transition-normal);
 }
 
 .payment-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-md);
+    border-left-color: var(--primary-light);
+}
+
+.payment-card:hover::before {
+    opacity: 1;
+    background: var(--accent-soft);
 }
 
 .payment-card h5 {
-    color: #071f1a;
+    color: var(--primary-dark);
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    position: relative;
+    z-index: 1;
 }
 
 .payment-card p {
     margin: 0;
-    color: #555;
+    color: var(--gray);
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
 }
 
 /* --- Download Section --- */
 .download-section {
-    background: linear-gradient(to right, #071f1a, #0f3d33);
-    padding: 50px;
-    border-radius: 20px;
-    margin-top: 60px;
-    color: #ffffff;
+    background: var(--gradient-primary);
+    padding: 60px;
+    border-radius: var(--radius-lg);
+    margin-top: 80px;
+    color: var(--white);
     text-align: center;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative circle */
+.download-section::after {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
 }
 
 .download-section h4 {
-    color: #7CFF00;
-    margin-bottom: 10px;
-    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 15px;
+    font-weight: 800;
+    font-size: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.download-section p {
+    color: var(--accent-soft);
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
 }
 
 .download-btn {
-    background-color: #7CFF00;
+    background-color: var(--white);
+    color: var(--primary);
     border: none;
-    padding: 15px 35px;
+    padding: 16px 40px;
     font-size: 1.1rem;
-    margin-top: 20px;
-    border-radius: 40px;
-    font-weight: bold;
-    color: #071f1a;
-    transition: all 0.3s ease;
+    margin-top: 10px;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    transition: all var(--transition-normal);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .download-btn:hover {
-    background-color: #a8ff4d;
+    background-color: var(--primary-dark);
+    color: var(--white);
     transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(30, 64, 175, 0.4);
 }
 
 /* --- Responsive --- */
 @media (max-width: 768px) {
     .custom-fees-table th, 
     .custom-fees-table td {
-        padding: 10px;
+        padding: 12px;
         font-size: 0.9rem;
     }
 
+    .fees-hero {
+        padding: 100px 0 60px;
+        border-bottom-left-radius: var(--radius-md);
+        border-bottom-right-radius: var(--radius-md);
+    }
+
     .fees-hero h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
+    }
+
+    .fees-table-card {
+        padding: 20px;
+    }
+
+    .download-section {
+        padding: 40px 20px;
+    }
+
+    .payment-cards {
+        flex-direction: column;
+    }
+    
+    .payment-card {
+        width: 100%;
     }
 }
-
-

@@ -1,377 +1,270 @@
+// src/Pages/Homepage/Home.jsx
 import React, { useState, useEffect, useRef } from "react";
-import { Container, Button, Row, Col, Card } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import {
-  FaGraduationCap,
-  FaBookOpen,
-  FaUsers,
-  FaTrophy,
-  FaCalendarAlt,
-  FaArrowRight,
-  FaChild,
-  FaChalkboardTeacher,
-  FaPalette,
+  FaGraduationCap, FaBookOpen, FaUsers, FaTrophy, FaArrowRight,
+  FaChild, FaChalkboardTeacher, FaPalette, FaStar, FaQuoteLeft
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import AdmissionCTA from "../../Components/AdmissionCTA/AdmissionCTA";
+// ✅ Removed CTAPopup import
+// ✅ Removed AdmissionCTA import
 import "./Home.css";
 
 const Home = () => {
   const slides = [
-    {
-      image: "/plainschool.jpeg",
-      title: "Academic Excellence",
-      text: "Providing a strong foundation for future leaders through innovative teaching.",
-    },
-    {
-      image: "/kidswithlaptops.jpeg",
-      title: "Digital Learning",
-      text: "Integrating cutting-edge technology into everyday classrooms.",
-    },
-    {
-      image: "/cultureday.jpg",
-      title: "Cultural Diversity",
-      text: "Celebrating heritage and unity in our school community.",
-    },
+    { image: "/plainschool.jpeg", title: "Academic Excellence", text: "Providing a strong foundation for future leaders." },
+    { image: "/kidswithlaptops.jpeg", title: "Digital Learning", text: "Integrating technology into everyday classrooms." },
+    { image: "/swimming.jpeg", title: "Holistic Growth", text: "Celebrating talent in sports and the arts." },
   ];
 
+  const programs = [
+    { icon: <FaChild />, title: "Nursery", desc: "Nurturing young minds through play-based learning." },
+    { icon: <FaBookOpen />, title: "Primary", desc: "Building strong academic foundations and character." },
+    { icon: <FaPalette />, title: "Arts & Clubs", desc: "Developing creativity through music, drama, and debate." },
+    { icon: <FaChalkboardTeacher />, title: "Mentorship", desc: "Guiding students with personalized pastoral care." },
+  ];
+
+  const features = [
+    { icon: <FaGraduationCap />, title: "Modern Curriculum", desc: "Blending Cambridge & UBE standards." },
+    { icon: <FaUsers />, title: "Small Classes", desc: "1:15 Teacher-Student ratio." },
+    { icon: <FaTrophy />, title: "Award Winning", desc: "Excellence in academics & sports." },
+    { icon: <FaStar />, title: "Values Based", desc: "Character & integrity first." }
+  ];
+
+  // Testimonials Data
+const testimonials = [
+  { image: "/teacher1.jpeg", name: "Sarah Nakato", role: "Parent", text: "JOKS School has transformed my child's confidence. The teachers truly care!", rating: 5 },
+  { image: "/teacher2.jpeg", name: "James Mukasa", role: "Parent", text: "The holistic approach here is exceptional. My daughter loves school every day.", rating: 5 },
+  { image: "/teacher3.jpeg", name: "Grace Akello", role: "Parent", text: "Outstanding facilities and dedicated staff. Best decision for our son's education.", rating: 5 },
+  { image: "/teacher4.jpeg", name: "Peter Okello", role: "Parent", text: "Traditional values and modern teaching - exactly what we were looking for.", rating: 5 }
+];
+
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [statsVisible, setStatsVisible] = useState(false);
-  const sectionRefs = { stats: useRef(null) };
+  const [stats, setStats] = useState({ s: 0, t: 0, a: 0, y: 0 });
+  const statsRef = useRef(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) =>
-        prev === slides.length - 1 ? 0 : prev + 1
-      );
-    }, 6000);
+    const interval = setInterval(() => setCurrentSlide((p) => (p + 1) % slides.length), 6000);
     return () => clearInterval(interval);
   }, [slides.length]);
 
-  useEffect(() => setIsLoaded(true), []);
+  // Auto-rotate testimonials
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [testimonials.length]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (
-            entry.isIntersecting &&
-            entry.target === sectionRefs.stats.current
-          ) {
-            setStatsVisible(true);
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-
-    if (sectionRefs.stats.current)
-      observer.observe(sectionRefs.stats.current);
-
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) setStatsVisible(true);
+    }, { threshold: 0.4 });
+    if (statsRef.current) observer.observe(statsRef.current);
     return () => observer.disconnect();
   }, []);
 
-  const [stats, setStats] = useState({
-    students: 0,
-    teachers: 0,
-    awards: 0,
-    years: 0,
-  });
-
   useEffect(() => {
-    if (statsVisible) {
-      const targets = {
-        students: 400,
-        teachers: 20,
-        awards: 10,
-        years: 10,
-      };
-
-      const duration = 2000;
-      const steps = 60;
-      const stepTime = duration / steps;
-
-      let current = {
-        students: 0,
-        teachers: 0,
-        awards: 0,
-        years: 0,
-      };
-
-      const increment = {
-        students: targets.students / steps,
-        teachers: targets.teachers / steps,
-        awards: targets.awards / steps,
-        years: targets.years / steps,
-      };
-
-      const timer = setInterval(() => {
-        current = {
-          students: Math.min(
-            current.students + increment.students,
-            targets.students
-          ),
-          teachers: Math.min(
-            current.teachers + increment.teachers,
-            targets.teachers
-          ),
-          awards: Math.min(
-            current.awards + increment.awards,
-            targets.awards
-          ),
-          years: Math.min(
-            current.years + increment.years,
-            targets.years
-          ),
-        };
-
-        setStats({
-          students: Math.round(current.students),
-          teachers: Math.round(current.teachers),
-          awards: Math.round(current.awards),
-          years: Math.round(current.years),
-        });
-
-        if (current.students >= targets.students)
-          clearInterval(timer);
-      }, stepTime);
-
-      return () => clearInterval(timer);
-    }
+    if (!statsVisible) return;
+    const targets = { s: 400, t: 20, a: 15, y: 10 };
+    let current = { s: 0, t: 0, a: 0, y: 0 };
+    const inc = { s: targets.s / 40, t: targets.t / 40, a: targets.a / 40, y: targets.y / 40 };
+    const timer = setInterval(() => {
+      current = { s: current.s + inc.s, t: current.t + inc.t, a: current.a + inc.a, y: current.y + inc.y };
+      setStats({ s: Math.round(current.s), t: Math.round(current.t), a: Math.round(current.a), y: Math.round(current.y) });
+      if (current.s >= targets.s) clearInterval(timer);
+    }, 50);
+    return () => clearInterval(timer);
   }, [statsVisible]);
 
-  const programs = [
-    {
-      icon: <FaChild />,
-      title: "Nursery",
-      desc: "Nurturing young minds with play-based learning.",
-      link: "/programs/nursery",
-    },
-    {
-      icon: <FaBookOpen />,
-      title: "Primary",
-      desc: "Building strong foundations in literacy and character.",
-      link: "/programs/primary",
-    },
-    {
-      icon: <FaPalette />,
-      title: "Extracurricular",
-      desc: "Sports, arts, debate, and clubs for well-rounded growth.",
-      link: "/programs/extracurricular",
-    },
-    {
-      icon: <FaChalkboardTeacher />,
-      title: "Pastoral Care",
-      desc: "Counseling and mentorship for every student's journey.",
-      link: "/programs/support",
-    },
-  ];
-
   return (
-    <div className={`home-page ${isLoaded ? "loaded" : ""}`}>
+    <div className="home-page">
       
-      {/* HERO */}
-      <section id="hero" className="home-hero">
-        {slides.map((slide, index) => (
-          <div
-            key={index}
-            className={`hero-slide ${
-              index === currentSlide ? "active" : ""
-            }`}
-            style={{ backgroundImage: `url(${slide.image})` }}
-          />
-        ))}
+      {/* ===== HERO ===== */}
+      <section className="home-hero">
+        <div className="hero-slides-wrapper">
+          {slides.map((s, i) => (
+            <div key={i} className={`hero-slide ${i === currentSlide ? "active" : ""}`} style={{ backgroundImage: `url(${s.image})` }} />
+          ))}
+        </div>
+        
+        {/* ✨ Glass/Mirror Overlay */}
+        <div className="hero-glass-overlay"></div>
+        <div className="hero-overlay" />
 
-        <div className="hero-overlay"></div>
-
-        <Container className="hero-content text-center">
+        <div className="hero-content">
           <h1 className="hero-title-block">JOKS SCHOOL</h1>
+          <p className="hero-tagline">Empowering Tomorrow's Leaders Through Excellence in Education</p>
 
-          <p className="hero-tagline">
-            Empowering Tomorrow's Leaders Through Excellence in Education
-          </p>
-
-          <div className="hero-info-card" key={currentSlide}>
-            <div className="card-icon">✨</div>
-            <div className="card-content">
-              <h3>{slides[currentSlide].title}</h3>
-              <p>{slides[currentSlide].text}</p>
+          <div className="hero-card-container">
+            <div className="hero-info-card">
+              <div className="card-icon"><FaGraduationCap /></div>
+              <div className="card-content">
+                <h3>{slides[currentSlide].title}</h3>
+                <p>{slides[currentSlide].text}</p>
+              </div>
             </div>
           </div>
 
-          <div className="hero-ctas">
-            <Button
-              as={Link}
-              to="/admissions"
-              className="btn-primary btn-lg"
-            >
-              Apply Now <FaArrowRight className="ms-2" />
-            </Button>
+          <Link to="/admissions" className="btn-main">
+            Apply Now <FaArrowRight style={{ marginLeft: 8 }} />
+          </Link>
+        </div>
+      </section>
+
+      {/* ===== METRICS SECTION ===== */}
+      <section className="metrics-section" ref={statsRef}>
+        <Container>
+          <div className="metrics-container">
+            <div className="metric-item">
+              <div className="metric-value">{stats.s}+</div>
+              <div className="metric-label">Students</div>
+            </div>
+            <div className="metric-item">
+              <div className="metric-value">{stats.t}+</div>
+              <div className="metric-label">Teachers</div>
+            </div>
+            <div className="metric-item">
+              <div className="metric-value">{stats.a}+</div>
+              <div className="metric-label">Awards</div>
+            </div>
+            <div className="metric-item">
+              <div className="metric-value">{stats.y}+</div>
+              <div className="metric-label">Years</div>
+            </div>
           </div>
         </Container>
       </section>
 
-      {/* STATS */}
-      <section
-        id="stats"
-        className="stats-section"
-        ref={sectionRefs.stats}
-      >
+      {/* ===== ABOUT SECTION ===== */}
+      <section className="about-section-new">
         <Container>
-          <div className="stats-horizontal-wrapper">
-            {[
-              {
-                icon: <FaUsers />,
-                value: stats.students,
-                label: "Students",
-              },
-              {
-                icon: <FaGraduationCap />,
-                value: stats.teachers,
-                label: "Expert Teachers",
-              },
-              {
-                icon: <FaTrophy />,
-                value: stats.awards,
-                label: "Awards Won",
-              },
-              {
-                icon: <FaCalendarAlt />,
-                value: stats.years,
-                label: "Years of Excellence",
-              },
-            ].map((stat, index) => (
-              <React.Fragment key={index}>
-                <div className="stat-card-horizontal">
-                  <div className="stat-icon-horizontal">
-                    {stat.icon}
-                  </div>
-                  <div className="stat-value-horizontal">
-                    {stat.value}+
-                  </div>
-                  <div className="stat-label-horizontal">
-                    {stat.label}
-                  </div>
-                </div>
-                {index < 3 && <div className="stat-divider" />}
-              </React.Fragment>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* ABOUT */}
-      <section id="about" className="about-section">
-        <Container>
-          <Row className="align-items-center">
-            <Col lg={6}>
-              <h2 className="section-title">
-                Legacy of{" "}
-                <span className="text-gradient">Excellence</span> &
-                Innovation
-              </h2>
-
-              <p className="section-description">
-                JOKS School stands as a beacon of learning,
-                combining traditional values with modern
-                educational methodologies.
-              </p>
-
-              <p className="section-description">
-                Our campus features smart classrooms, science
-                labs, sports facilities and creative arts
-                studios.
-              </p>
-
-              <div className="about-features">
-                {[
-                  "Cambridge & UBE Curriculum",
-                  "1:15 Teacher-Student Ratio",
-                  "100% University Placement",
-                  "Holistic Development Focus",
-                ].map((feature, i) => (
-                  <div key={i} className="feature-item">
-                    <span className="feature-check">✓</span>
-                    {feature}
-                  </div>
-                ))}
-              </div>
-            </Col>
-
-            <Col lg={6}>
-              <div className="about-image-wrapper">
-                <img
-                  src="/graduation.jpeg"
-                  alt="Graduation"
-                  className="about-image-main"
-                />
-
-                <div className="about-image-accent">
-                  <img
-                    src="/kidswithlaptops.jpeg"
-                    alt="Technology"
-                  />
-                </div>
-
-                <div className="experience-badge">
-                  <span className="badge-number">10+</span>
-                  <span className="badge-text">
-                    Years Excellence
-                  </span>
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-
-      {/* PROGRAMS */}
-      <section id="programs" className="programs-section">
-        <Container>
-          <div className="section-header text-center">
-            <span className="section-tag">OUR PROGRAMS</span>
+          
+          <div className="about-header">
+            <span className="section-tag">About Us</span>
             <h2 className="section-title">
-              Education that{" "}
-              <span className="text-gradient">Transforms</span>
+              A Legacy of <span className="text-gradient">Excellence</span>
             </h2>
           </div>
 
-          <Row className="programs-grid-compact">
+          <div className="about-grid">
+            
+            {/* Left: Image with Stroke Effect */}
+            <div className="about-image-wrapper">
+              <div className="image-main-container">
+                <img src="/graduation.jpeg" alt="Students" className="image-main" />
+              </div>
+              {/* The Decorative Stroke */}
+              <div className="stroke-box"></div>
+              
+              {/* Experience Badge */}
+              <div className="exp-badge">
+                <h3>10+</h3>
+                <p>Years</p>
+              </div>
+            </div>
 
-            {programs.map((program, index) => (
-              <Col xs={12} md={6} key={index}>
-                <Card className="program-card-compact">
-                  <Card.Body>
-                    <div className="program-icon-compact">
-                      {program.icon}
-                    </div>
+            {/* Right: Content Grid */}
+            <div className="about-content">
+              <h3>Why Choose JOKS School?</h3>
+              <p className="section-desc">
+                We provide a nurturing environment where academic excellence meets character development. Our holistic approach ensures every child reaches their full potential.
+              </p>
 
-                    <Card.Title className="program-title-compact">
-                      {program.title}
-                    </Card.Title>
+              {/* Feature Cards Grid */}
+              <div className="features-bento">
+                {features.map((f, i) => (
+                  <div key={i} className="feature-card">
+                    <div className="feature-icon">{f.icon}</div>
+                    <div className="feature-title">{f.title}</div>
+                    <div className="feature-desc">{f.desc}</div>
+                  </div>
+                ))}
+              </div>
 
-                    <Card.Text className="program-desc-compact">
-                      {program.desc}
-                    </Card.Text>
+              {/* LEARN MORE BUTTON */}
+              <div className="mt-5">
+                <Link to="/about" className="btn-main">
+                  Learn More <FaArrowRight style={{ marginLeft: 8 }} />
+                </Link>
+              </div>
+            </div>
 
-                  </Card.Body>
-                </Card>
-              </Col>
+          </div>
+        </Container>
+      </section>
+
+      {/* ===== PROGRAMS ===== */}
+      <section className="programs-section">
+        <Container>
+          <div className="programs-header">
+            <span className="section-tag">Our Programs</span>
+            <h2 className="section-title">Education that <span className="text-gradient">Transforms</span></h2>
+          </div>
+          
+          <div className="programs-grid">
+            {programs.map((p, i) => (
+              <div key={i} className="program-card">
+                <div className="p-icon">{p.icon}</div>
+                <h3 className="p-title">{p.title}</h3>
+                <p className="p-desc">{p.desc}</p>
+              </div>
             ))}
-
-          </Row>
+          </div>
         </Container>
       </section>
 
-      {/* ADMISSIONS CTA */}
-      <section
-        id="admissions"
-        className="admissions-cta-section"
-      >
-        <Container className="text-center">
-          <AdmissionCTA />
+      {/* ✨ TESTIMONIALS SECTION */}
+      <section className="testimonials-section">
+        <Container>
+          <div className="testimonials-header">
+            <span className="section-tag">Testimonials</span>
+            <h2 className="section-title">What Our <span className="text-gradient">Parents Say</span></h2>
+          </div>
+
+          <div className="testimonials-carousel">
+            {testimonials.map((t, i) => (
+              <div
+                key={i}
+                className={`testimonial-card ${i === currentTestimonial ? "active" : ""}`}
+              >
+                <div className="testimonial-image-wrapper">
+                  <img src={t.image} alt={t.name} className="testimonial-image" />
+                  <div className="testimonial-rating">
+                    {[...Array(t.rating)].map((_, j) => (
+                      <FaStar key={j} className="star" />
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="testimonial-content">
+                  <FaQuoteLeft className="quote-icon" />
+                  <p className="testimonial-text">"{t.text}"</p>
+                  <div className="testimonial-author">
+                    <h4>{t.name}</h4>
+                    <span className="testimonial-role">{t.role}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Navigation Dots */}
+          <div className="testimonial-dots">
+            {testimonials.map((_, i) => (
+              <button
+                key={i}
+                className={`testimonial-dot ${i === currentTestimonial ? "active" : ""}`}
+                onClick={() => setCurrentTestimonial(i)}
+                aria-label={`Go to testimonial ${i + 1}`}
+              />
+            ))}
+          </div>
         </Container>
       </section>
+
     </div>
   );
 };

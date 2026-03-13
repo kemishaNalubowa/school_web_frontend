@@ -1,7 +1,9 @@
+// src/Pages/AboutUspage/AboutUs.jsx
 import React from "react";
 import { Container, Card } from "react-bootstrap";
+ // ← Only addition
 import "./AboutUs.css";
-
+import CTAPopup from "../../Components/CTAPopup";
 const AboutUs = () => {
   // Team Data - Updated to use 'public' folder images
   // Create a folder 'team' inside 'public/images' and put your photos there
@@ -31,6 +33,9 @@ const AboutUs = () => {
 
   return (
     <div className="about-page">
+      
+      {/* ✨ CTA Popup - Only addition: shows on About Us page */}
+      <CTAPopup autoCloseDelay={10000} />
       
       {/* Hero Section */}
       <div className="about-hero">

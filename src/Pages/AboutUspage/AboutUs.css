@@ -51,14 +51,19 @@
   align-items: center;
   margin-bottom: 100px;
   padding: 0 40px;
+  justify-content: center;
 }
 
 .about-image-box {
   flex: 1;
   min-width: 300px;
+  display: flex;
+  align-items: center;
 }
 
 .about-image-box img {
+  display: flex;
+  justify-content: center;
   width: 100%;
   height: auto;
   border-radius: 15px;

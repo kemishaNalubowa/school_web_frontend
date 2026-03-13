@@ -2,132 +2,584 @@
    --- Gallery Page Layout ---
    ============================== */
 .gallery-page {
-    background: linear-gradient(135deg, #FEFFD3 0%, #f5f7fa 100%);
+    background: var(--bg-light);
     min-height: 100vh;
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--dark-blue);
+    overflow-x: hidden;
 }
 
-/* --- Hero Section --- */
+/* ==============================
+   --- Hero Section ---
+   ============================== */
 .gallery-hero {
-    background: linear-gradient(to right, #071f1a, #0f3d33);
-    color: #ffffff;
-    padding: 120px 20px 80px;
+    background: var(--gradient-primary);
+    color: var(--white);
+    padding: 140px 20px 100px;
     text-align: center;
-    border-bottom-left-radius: 50px;
-    border-bottom-right-radius: 50px;
-    margin-bottom: 60px;
+    border-bottom-left-radius: var(--radius-lg);
+    border-bottom-right-radius: var(--radius-lg);
+    margin-bottom: 80px;
     position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+/* Animated background particles */
+.gallery-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+    animation: rotate 30s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Floating orbs for depth */
+.gallery-hero::after {
+    content: '';
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
 }
 
 .gallery-hero h1 {
-    font-size: 3.5rem;
-    font-weight: 800;
-    color: #7CFF00;
-}
-
-/* --- Masonry Grid Layout --- */
-.masonry-grid {
-    column-count: 3;
-    column-gap: 20px;
-}
-
-.masonry-item {
-    break-inside: avoid;
-    margin-bottom: 20px;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    color: var(--white);
+    text-shadow: 0 4px 15px rgba(30, 64, 175, 0.5);
     position: relative;
-    border-radius: 15px;
-    overflow: hidden;
+    z-index: 1;
+    margin-bottom: 15px;
+    letter-spacing: -1px;
+}
+
+.gallery-hero p {
+    color: var(--accent-soft);
+    font-size: 1.2rem;
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Decorative underline */
+.gallery-hero .hero-underline {
+    width: 100px;
+    height: 4px;
+    background: var(--white);
+    margin: 30px auto 0;
+    border-radius: var(--radius-full);
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+/* ==============================
+   --- Filter Buttons ---
+   ============================== */
+.gallery-filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+    padding: 0 20px;
+}
+
+.filter-btn {
+    background: var(--white);
+    border: 2px solid var(--accent-soft);
+    color: var(--primary-dark);
+    padding: 12px 28px;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    font-size: 0.95rem;
     cursor: pointer;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-sm);
 }
 
-.masonry-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--white);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md), var(--shadow-glow);
 }
 
-/* Image Styles */
-.masonry-item img {
-    width: 100%;
-    display: block;
-    transition: transform 0.5s ease;
-    border-radius: 15px;
+/* ==============================
+   --- Masonry Grid (react-masonry-css) ---
+   ============================== */
+
+/* Main grid container - Flex layout for masonry columns */
+.masonry-grid {
+    display: flex;
+    width: auto;
+    margin: 0 auto;
+    max-width: 1400px;
+    padding: 0 20px;
+    gap: 25px; /* Space between columns */
 }
 
-/* Arbitrary height classes for masonry effect */
-.item-0 img { height: 300px; object-fit: cover; }
-.item-1 img { height: 400px; object-fit: cover; }
-.item-2 img { height: 250px; object-fit: cover; }
-
-/* Hover Overlay with neon accent */
-.image-overlay {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(to top, rgba(7,31,26,0.8), transparent);
-    opacity: 0;
+/* Individual column wrapper */
+.masonry-grid-column {
+    background-clip: padding-box;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    padding: 20px;
-    color: #7CFF00;
-    transition: opacity 0.4s ease;
+    gap: 25px; /* Space between items in same column */
 }
 
-.masonry-item:hover .image-overlay {
-    opacity: 1;
+/* Masonry Item Card */
+.masonry-item {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-normal);
+    border: 1px solid var(--accent-soft);
+    background: var(--white);
+    width: 100%;
+    /* Natural height - NO fixed heights! Masonry handles this */
+}
+
+/* Staggered animation for grid items on load */
+.masonry-item {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Sequential delays for beautiful entrance */
+.masonry-item:nth-child(1) { animation-delay: 0.05s; }
+.masonry-item:nth-child(2) { animation-delay: 0.1s; }
+.masonry-item:nth-child(3) { animation-delay: 0.15s; }
+.masonry-item:nth-child(4) { animation-delay: 0.2s; }
+.masonry-item:nth-child(5) { animation-delay: 0.25s; }
+.masonry-item:nth-child(6) { animation-delay: 0.3s; }
+.masonry-item:nth-child(7) { animation-delay: 0.35s; }
+.masonry-item:nth-child(8) { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hover Effects */
+.masonry-item:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+    border-color: var(--primary-light);
+    z-index: 5;
+}
+
+/* Image Styles - Natural flow, no fixed heights */
+.masonry-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: var(--radius-lg);
 }
 
 .masonry-item:hover img {
     transform: scale(1.1);
 }
 
-.image-overlay h3 {
-    margin: 0;
+/* ==============================
+   --- Hover Overlay with WOW Effects ---
+   ============================== */
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        to top,
+        rgba(30, 64, 175, 0.95) 0%,
+        rgba(30, 64, 175, 0.7) 50%,
+        transparent 100%
+    );
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 25px;
+    color: var(--white);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2;
+}
+
+.masonry-item:hover .image-overlay {
+    opacity: 1;
+}
+
+/* Corner accent borders */
+.image-overlay::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-md);
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.4s ease;
+}
+
+.masonry-item:hover .image-overlay::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Category Badge */
+.overlay-category {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--primary-light);
+    color: var(--white);
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
     font-weight: 700;
-    transform: translateY(20px);
-    transition: transform 0.4s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transform: translateY(-20px);
+    opacity: 0;
+    transition: all 0.4s ease 0.1s;
+    box-shadow: var(--shadow-md);
+}
+
+.masonry-item:hover .overlay-category {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Title & Description */
+.image-overlay h3 {
+    margin: 0 0 10px;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: var(--white);
+    transform: translateY(30px);
+    opacity: 0;
+    transition: all 0.5s ease 0.15s;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .image-overlay span {
     font-size: 0.9rem;
-    opacity: 0.8;
-    transform: translateY(20px);
-    transition: transform 0.5s;
+    color: var(--accent-soft);
+    transform: translateY(30px);
+    opacity: 0;
+    transition: all 0.5s ease 0.25s;
+    line-height: 1.5;
 }
 
 .masonry-item:hover .image-overlay h3,
 .masonry-item:hover .image-overlay span {
     transform: translateY(0);
+    opacity: 1;
 }
 
-/* --- Lightbox Modal --- */
+/* View Button */
+.overlay-view-btn {
+    margin-top: 20px;
+    background: var(--white);
+    color: var(--primary);
+    border: none;
+    padding: 10px 24px;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transform: translateY(30px);
+    opacity: 0;
+    transition: all 0.5s ease 0.35s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: var(--shadow-md);
+}
+
+.masonry-item:hover .overlay-view-btn {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.overlay-view-btn:hover {
+    background: var(--primary-light);
+    color: var(--white);
+    box-shadow: var(--shadow-glow);
+}
+
+/* ==============================
+   --- Lightbox Modal ---
+   ============================== */
 .lightbox-modal .modal-content {
     background: transparent;
     border: none;
+    box-shadow: none;
+}
+
+.lightbox-modal .modal-dialog {
+    max-width: 900px;
+    margin: 50px auto;
+}
+
+.lightbox-content {
+    position: relative;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
 }
 
 .lightbox-content img {
     width: 100%;
-    border-radius: 15px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    display: block;
 }
 
 .lightbox-caption {
     text-align: center;
-    padding: 15px;
-    background: #071f1a;
-    color: #7CFF00;
-    margin-top: -5px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    padding: 25px;
+    background: var(--gradient-primary);
+    color: var(--white);
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 }
 
-/* --- Responsive Design --- */
+.lightbox-caption h4 {
+    margin: 0 0 10px;
+    font-weight: 700;
+    font-size: 1.4rem;
+}
+
+.lightbox-caption p {
+    margin: 0;
+    color: var(--accent-soft);
+    font-size: 0.95rem;
+}
+
+/* Close Button */
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--white);
+    color: var(--primary-dark);
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    z-index: 10;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-close:hover {
+    background: var(--primary);
+    color: var(--white);
+    transform: rotate(90deg);
+    box-shadow: var(--shadow-glow);
+}
+
+/* ==============================
+   --- Load More Button ---
+   ============================== */
+.load-more-section {
+    text-align: center;
+    margin-top: 60px;
+    padding-bottom: 40px;
+}
+
+.load-more-btn {
+    background: var(--white);
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    padding: 16px 45px;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-md);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.load-more-btn:hover {
+    background: var(--primary);
+    color: var(--white);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+}
+
+.load-more-btn .arrow {
+    transition: transform 0.3s ease;
+}
+
+.load-more-btn:hover .arrow {
+    transform: translateX(5px);
+}
+
+/* ==============================
+   --- Responsive Design ---
+   ============================== */
+
+/* Tablet: 2 columns */
 @media (max-width: 992px) {
-    .masonry-grid { column-count: 2; }
+    .masonry-grid {
+        gap: 20px;
+    }
+    
+    .masonry-grid-column {
+        gap: 20px;
+    }
+
+    .gallery-hero {
+        padding: 120px 20px 80px;
+    }
+
+    .gallery-hero h1 {
+        font-size: 2.8rem;
+    }
 }
 
+/* Mobile: 1 column */
 @media (max-width: 576px) {
-    .masonry-grid { column-count: 1; }
-    .gallery-hero { padding: 100px 20px 60px; }
+    .masonry-grid {
+        padding: 0 15px;
+        gap: 15px;
+    }
+    
+    .masonry-grid-column {
+        gap: 15px;
+    }
+
+    .gallery-hero {
+        padding: 100px 20px 60px;
+        border-bottom-left-radius: var(--radius-md);
+        border-bottom-right-radius: var(--radius-md);
+    }
+
+    .gallery-hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .gallery-hero p {
+        font-size: 1rem;
+    }
+
+    .gallery-filters {
+        gap: 10px;
+    }
+
+    .filter-btn {
+        padding: 10px 20px;
+        font-size: 0.85rem;
+    }
+
+    .lightbox-modal .modal-dialog {
+        margin: 20px auto;
+    }
+    
+    .image-overlay h3 {
+        font-size: 1.1rem;
+    }
+    
+    .overlay-view-btn {
+        padding: 8px 20px;
+        font-size: 0.8rem;
+    }
+}
+
+/* ==============================
+   --- Filter Animation (Optional) ---
+   ============================== */
+.masonry-item.filter-out {
+    animation: fadeOutScale 0.4s ease forwards;
+}
+
+@keyframes fadeOutScale {
+    to {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+}
+
+.masonry-item.filter-in {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+/* ==============================
+   --- Accessibility ---
+   ============================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus states for keyboard navigation */
+.masonry-item:focus-within,
+.filter-btn:focus,
+.load-more-btn:focus,
+.lightbox-close:focus {
+    outline: 3px solid var(--primary-light);
+    outline-offset: 3px;
+}
+
+/* Screen reader only class */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }

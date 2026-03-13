@@ -1,6 +1,6 @@
 /* --- Admissions Page Layout --- */
 .admissions-page {
-  background-color: #f9fbfa;
+  background-color: var(--bg-light);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -8,13 +8,13 @@
 
 /* --- Hero Section --- */
 .admissions-hero {
-  background: linear-gradient(135deg, #071F1A 0%, #0c2e28 100%);
-  color: #ffffff;
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+  color: var(--white);
   padding: 130px 0 90px;
   text-align: center;
   border-bottom-left-radius: 60px;
   border-bottom-right-radius: 60px;
-  box-shadow: 0 20px 40px rgba(7, 31, 26, 0.2);
+  box-shadow: 0 20px 40px rgba(30, 64, 175, 0.2);
   position: relative;
 }
 
@@ -22,12 +22,12 @@
   font-size: 3.5rem;
   font-weight: 800;
   margin-bottom: 15px;
-  color: #FEFFD3;
+  color: var(--white);
 }
 
 .admissions-hero p {
   font-size: 1.25rem;
-  color: #d6d6d6;
+  color: var(--accent-soft);
   max-width: 700px;
   margin: 0 auto;
 }
@@ -37,7 +37,7 @@
   content: "";
   width: 100px;
   height: 4px;
-  background: #7CFF00;
+  background: var(--primary-light);
   display: block;
   margin: 30px auto 0;
   border-radius: 3px;
@@ -55,12 +55,12 @@
 .board-intro {
   text-align: center;
   margin-bottom: 60px;
-  color: #333;
+  color: var(--dark-blue);
 }
 
 .board-intro h2 {
   font-weight: 800;
-  color: #071F1A;
+  color: var(--primary-dark);
   font-size: 2rem;
 }
 
@@ -73,40 +73,40 @@
 }
 
 .option-card {
-  background: #ffffff;
+  background: var(--white);
   width: 330px;
   padding: 45px 35px;
   border-radius: 25px;
   text-align: center;
   cursor: pointer;
   transition: all 0.4s ease;
-  border: 1px solid #eeeeee;
-  box-shadow: 0 15px 35px rgba(7, 31, 26, 0.08);
+  border: 1px solid var(--accent-soft);
+  box-shadow: 0 15px 35px rgba(30, 64, 175, 0.08);
 }
 
 .option-card:hover {
   transform: translateY(-18px);
-  box-shadow: 0 30px 50px rgba(7, 31, 26, 0.18);
+  box-shadow: 0 30px 50px rgba(30, 64, 175, 0.18);
 }
 
 /* Card Accent Borders */
 .card-info {
-  border-top: 6px solid #7CFF00;
+  border-top: 6px solid var(--primary-light);
 }
 
 .card-fees {
-  border-top: 6px solid #071F1A;
+  border-top: 6px solid var(--primary-dark);
 }
 
 /* Card Content */
 .card-icon {
-  color: #555;
+  color: var(--gray);
   margin-bottom: 25px;
   transition: all 0.3s ease;
 }
 
 .option-card:hover .card-icon {
-  color: #7CFF00;
+  color: var(--primary-light);
   transform: scale(1.1);
 }
 
@@ -114,11 +114,11 @@
   font-size: 1.9rem;
   margin-bottom: 18px;
   font-weight: 800;
-  color: #071F1A;
+  color: var(--primary-dark);
 }
 
 .option-card p {
-  color: #555;
+  color: var(--gray);
   margin-bottom: 30px;
   font-size: 1.05rem;
   line-height: 1.6;
@@ -127,8 +127,8 @@
 /* Buttons */
 .card-btn {
   background-color: transparent;
-  border: 2px solid #7CFF00;
-  color: #071F1A;
+  border: 2px solid var(--primary-light);
+  color: var(--primary-dark);
   padding: 12px 28px;
   border-radius: 30px;
   font-weight: 700;
@@ -136,15 +136,15 @@
 }
 
 .option-card:hover .card-btn {
-  background-color: #7CFF00;
-  color: #071F1A;
-  box-shadow: 0 10px 25px rgba(124, 255, 0, 0.4);
+  background-color: var(--primary-light);
+  color: var(--white);
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
 }
 
 /* --- Modal Styling --- */
 .modal-header-custom {
-  background: linear-gradient(135deg, #071F1A 0%, #0c2e28 100%);
-  color: #FEFFD3;
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+  color: var(--white);
 }
 
 /* Fees Table */
@@ -157,37 +157,37 @@
 .fees-table td {
   padding: 14px;
   text-align: left;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid var(--accent-soft);
 }
 
 .fees-table th {
-  background-color: #f5f5f5;
-  color: #071F1A;
+  background-color: var(--bg-light);
+  color: var(--primary-dark);
   font-weight: 700;
 }
 
 /* Modal Buttons */
 .btn-apply {
-  background-color: #7CFF00;
+  background-color: var(--primary-light);
   border: none;
-  color: #071F1A;
+  color: var(--white);
   font-weight: 700;
   padding: 10px 25px;
 }
 
 .btn-apply:hover {
-  background-color: #a8ff4d;
+  background-color: var(--primary);
 }
 
 .btn-download {
-  background-color: #071F1A;
+  background-color: var(--primary-dark);
   border: none;
-  color: #ffffff;
+  color: var(--white);
   padding: 10px 25px;
 }
 
 .btn-download:hover {
-  background-color: #0c2e28;
+  background-color: var(--primary);
 }
 
 /* --- Responsive --- */
@@ -213,5 +213,3 @@
 .card-link-wrapper:hover {
   text-decoration: none;
 }
-
-

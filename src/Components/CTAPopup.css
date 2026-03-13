@@ -1,0 +1,210 @@
+/* src/Components/CTAPopup/CTAPopup.css */
+
+/* ==============================
+   ✨ CTA Popup - Clean & Modern
+   ============================== */
+
+.cta-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.cta-popup {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px 25px 25px; /* Added top padding since icon is removed */
+  max-width: 400px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  animation: slideUp 0.4s ease-out;
+  text-align: center; /* Center all text content */
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Close Button */
+.cta-popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  border: none;
+  color: #64748b;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.cta-popup-close:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+/* Title */
+.cta-popup h3 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 12px;
+  line-height: 1.3;
+}
+
+/* Description */
+.cta-popup p {
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+
+/* CTA Button - Smaller & Centered */
+.cta-popup-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 20px;
+  background: #1e40af;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  width: auto; /* Changed from 100% to auto for smaller size */
+  margin: 0 auto 20px; /* Center the button */
+}
+
+.cta-popup-btn:hover {
+  background: #1e3a8a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(30, 64, 175, 0.3);
+  color: #ffffff;
+}
+
+.cta-popup-btn .arrow {
+  transition: transform 0.2s;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.cta-popup-btn:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* Countdown Timer */
+.cta-popup-timer {
+  color: #94a3b8;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.cta-popup-timer span {
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* Progress Bar */
+.cta-popup-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #e2e8f0;
+  border-radius: 2px 2px 0 0;
+  overflow: hidden;
+}
+
+.cta-popup-progress::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #1e40af, #3b82f6);
+  animation: countdown var(--delay, 10000ms) linear forwards;
+}
+
+@keyframes countdown {
+  from { width: 100%; }
+  to { width: 0%; }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .cta-popup {
+    margin: 15px;
+    max-width: 100%;
+    padding: 18px 20px 22px;
+  }
+  
+  .cta-popup h3 {
+    font-size: 1.25rem;
+  }
+  
+  .cta-popup p {
+    font-size: 0.85rem;
+  }
+  
+  .cta-popup-btn {
+    padding: 7px 18px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .cta-popup,
+  .cta-popup-overlay,
+  .cta-popup-progress::after {
+    animation: none !important;
+  }
+  
+  .cta-popup {
+    opacity: 1;
+    transform: none;
+  }
+  
+  .cta-popup-btn:hover {
+    transform: none;
+  }
+}
