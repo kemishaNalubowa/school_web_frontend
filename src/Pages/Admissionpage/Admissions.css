@@ -1,48 +1,94 @@
+/* --- Admissions Page Layout - ELITE NAVY + RED THEME --- */
+
+/* ===== CSS VARIABLES - SCOPED TO ADMISSIONS PAGE ONLY ===== */
+.admissions-page {
+  /* Core Brand Colors */
+  --navy-dark: #150920;
+  --navy: #1a0f2e;
+  --navy-light: #2d1f4e;
+  
+  --red-primary: #c41e3a;
+  --red-dark: #9b1830;
+  --red-light: #d6334f;
+  
+  /* Neutrals */
+  --white: #ffffff;
+  --bg-light: #FAF8F5;
+  --gray: #6C757D;
+  --gray-dark: #495057;
+  
+  /* Effects */
+  --shadow-sm: 0 15px 35px rgba(21, 9, 32, 0.08);
+  --shadow-md: 0 20px 40px rgba(21, 9, 32, 0.12);
+  --shadow-lg: 0 30px 50px rgba(21, 9, 32, 0.18);
+  --transition: all 0.4s ease;
+}
+
 /* --- Admissions Page Layout --- */
 .admissions-page {
   background-color: var(--bg-light);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  font-family: 'Segoe UI', sans-serif;
+  color: var(--gray-dark);
 }
 
 /* --- Hero Section --- */
-.admissions-hero {
-  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+.admissions-page .admissions-hero {
+  background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
   color: var(--white);
   padding: 130px 0 90px;
   text-align: center;
   border-bottom-left-radius: 60px;
   border-bottom-right-radius: 60px;
-  box-shadow: 0 20px 40px rgba(30, 64, 175, 0.2);
+  box-shadow: 0 20px 40px rgba(196, 30, 58, 0.2); /* Red-tinted shadow */
   position: relative;
+  overflow: hidden;
 }
 
-.admissions-hero h1 {
+.admissions-page .admissions-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(196,30,58,0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(196,30,58,0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.admissions-page .admissions-hero h1 {
   font-size: 3.5rem;
   font-weight: 800;
   margin-bottom: 15px;
-  color: #ffffff; /* Hero heading white */
+  color: #ffffff;
   animation: slideDown 0.8s ease-out;
+  position: relative;
+  z-index: 1;
 }
 
-.admissions-hero p {
+.admissions-page .admissions-hero p {
   font-size: 1.25rem;
-  color: var(--accent-soft);
+  color: rgba(255,255,255,0.9); /* Soft white instead of accent-soft */
   max-width: 700px;
   margin: 0 auto;
   animation: fadeIn 1s ease-out 0.3s backwards;
+  position: relative;
+  z-index: 1;
 }
 
-/* Accent underline */
-.admissions-hero::after {
+/* Accent underline - RED */
+.admissions-page .admissions-hero::after {
   content: "";
   width: 100px;
   height: 4px;
-  background: var(--primary-light);
+  background: var(--red-primary);
   display: block;
   margin: 30px auto 0;
   border-radius: 3px;
+  box-shadow: 0 0 15px rgba(196, 30, 58, 0.4);
+  position: relative;
+  z-index: 1;
 }
 
 /* --- Animations --- */
@@ -57,7 +103,7 @@
 }
 
 /* --- Card Board Section --- */
-.options-board {
+.admissions-page .options-board {
   flex: 1;
   margin-top: -60px;
   position: relative;
@@ -65,74 +111,76 @@
   padding: 60px 20px;
 }
 
-.board-intro {
+.admissions-page .board-intro {
   text-align: center;
   margin-bottom: 60px;
-  color: var(--dark-blue);
+  color: var(--navy);
   animation: fadeIn 1s ease-out;
 }
 
-.board-intro h2 {
+.admissions-page .board-intro h2 {
   font-weight: 800;
-  color: var(--primary-dark);
+  color: var(--navy-dark);
   font-size: 2rem;
 }
 
 /* --- Cards --- */
-.cards-wrapper {
+.admissions-page .cards-wrapper {
   display: flex;
   justify-content: center;
   gap: 50px;
   flex-wrap: wrap;
 }
 
-.option-card {
+.admissions-page .option-card {
   background: var(--white);
   width: 330px;
   padding: 45px 35px;
   border-radius: 25px;
   text-align: center;
   cursor: pointer;
-  transition: all 0.4s ease;
-  border: 1px solid var(--accent-soft);
-  box-shadow: 0 15px 35px rgba(30, 64, 175, 0.08);
+  transition: var(--transition);
+  border: 1px solid var(--bg-light);
+  box-shadow: var(--shadow-sm);
   animation: fadeIn 0.8s ease-out;
 }
 
-.option-card:hover {
+.admissions-page .option-card:hover {
   transform: translateY(-18px);
-  box-shadow: 0 30px 50px rgba(30, 64, 175, 0.18);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--red-primary);
 }
 
-/* Card Accent Borders */
-.card-info {
-  border-top: 6px solid var(--primary-light);
+/* Card Accent Borders - NAVY & RED */
+.admissions-page .card-info {
+  border-top: 6px solid var(--red-primary); /* Red for Info */
 }
 
-.card-fees {
-  border-top: 6px solid var(--primary-dark);
+.admissions-page .card-fees {
+  border-top: 6px solid var(--navy); /* Navy for Fees */
 }
 
 /* Card Content */
-.card-icon {
+.admissions-page .card-icon {
   color: var(--gray);
   margin-bottom: 25px;
   transition: all 0.3s ease;
+  font-size: 2.5rem;
 }
 
-.option-card:hover .card-icon {
-  color: var(--primary-light);
+.admissions-page .option-card:hover .card-icon {
+  color: var(--red-primary); /* Red on hover */
   transform: scale(1.1);
 }
 
-.option-card h3 {
+.admissions-page .option-card h3 {
   font-size: 1.9rem;
   margin-bottom: 18px;
   font-weight: 800;
-  color: var(--primary-dark);
+  color: var(--navy-dark);
 }
 
-.option-card p {
+.admissions-page .option-card p {
   color: var(--gray);
   margin-bottom: 30px;
   font-size: 1.05rem;
@@ -140,91 +188,214 @@
 }
 
 /* Buttons */
-.card-btn {
+.admissions-page .card-btn {
   background-color: transparent;
-  border: 2px solid var(--primary-light);
-  color: var(--primary-dark);
+  border: 2px solid var(--red-primary); /* Red border */
+  color: var(--navy-dark);
   padding: 12px 28px;
   border-radius: 30px;
   font-weight: 700;
-  transition: all 0.3s ease;
+  transition: var(--transition);
+  display: inline-block;
+  text-decoration: none;
 }
 
-.option-card:hover .card-btn {
-  background-color: var(--primary-light);
+.admissions-page .option-card:hover .card-btn {
+  background-color: var(--red-primary); /* Red fill on hover */
   color: var(--white);
-  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+  border-color: var(--red-primary);
+  box-shadow: 0 10px 25px rgba(196, 30, 58, 0.4);
 }
 
 /* --- Modal Styling --- */
-.modal-header-custom {
-  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+.admissions-page .modal-header-custom {
+  background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
   color: var(--white);
+  border-radius: 20px 20px 0 0;
+  padding: 20px 24px;
+}
+
+.admissions-page .modal-header-custom .modal-title {
+  font-weight: 700;
+}
+
+.admissions-page .modal-header-custom .btn-close {
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+}
+
+.admissions-page .modal-header-custom .btn-close:hover {
+  opacity: 1;
 }
 
 /* Fees Table */
-.fees-table {
+.admissions-page .fees-table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.fees-table th,
-.fees-table td {
+.admissions-page .fees-table th,
+.admissions-page .fees-table td {
   padding: 14px;
   text-align: left;
-  border-bottom: 1px solid var(--accent-soft);
+  border-bottom: 1px solid var(--bg-light);
 }
 
-.fees-table th {
+.admissions-page .fees-table th {
   background-color: var(--bg-light);
-  color: var(--primary-dark);
+  color: var(--navy-dark);
   font-weight: 700;
+}
+
+.admissions-page .fees-table td {
+  color: var(--gray-dark);
 }
 
 /* Modal Buttons */
-.btn-apply {
-  background-color: var(--primary-light);
+.admissions-page .btn-apply {
+  background-color: var(--red-primary);
   border: none;
   color: var(--white);
   font-weight: 700;
   padding: 10px 25px;
+  border-radius: 30px;
+  transition: var(--transition);
 }
 
-.btn-apply:hover {
-  background-color: var(--primary);
+.admissions-page .btn-apply:hover {
+  background-color: var(--red-light);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(196, 30, 58, 0.35);
 }
 
-.btn-download {
-  background-color: var(--primary-dark);
+.admissions-page .btn-download {
+  background-color: var(--navy);
   border: none;
   color: var(--white);
   padding: 10px 25px;
+  border-radius: 30px;
+  transition: var(--transition);
 }
 
-.btn-download:hover {
-  background-color: var(--primary);
+.admissions-page .btn-download:hover {
+  background-color: var(--navy-light);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(21, 9, 32, 0.35);
 }
 
 /* --- Responsive --- */
 @media (max-width: 768px) {
-  .admissions-hero h1 {
+  .admissions-page .admissions-hero h1 {
     font-size: 2.5rem;
   }
 
-  .option-card {
+  .admissions-page .option-card {
     width: 100%;
     max-width: 380px;
+  }
+  
+  .admissions-page .cards-wrapper {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admissions-page .admissions-hero {
+    padding: 100px 0 70px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+  }
+  
+  .admissions-page .admissions-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .admissions-page .admissions-hero p {
+    font-size: 1.1rem;
+  }
+  
+  .admissions-page .option-card {
+    padding: 35px 25px;
+  }
+  
+  .admissions-page .option-card h3 {
+    font-size: 1.6rem;
   }
 }
 
 /* Remove underline for the card links */
-.card-link-wrapper {
-  text-decoration: none; /* Remove underline from the Link */
-  color: inherit;        /* Ensure text color inside Link stays same */
-  display: block;        /* Make sure the whole card is clickable */
+.admissions-page .card-link-wrapper {
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
-.card-link-wrapper:hover {
+.admissions-page .card-link-wrapper:hover {
   text-decoration: none;
 }
 
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+  .admissions-page *,
+  .admissions-page *::before,
+  .admissions-page *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+.admissions-page .option-card:focus-visible,
+.admissions-page .card-btn:focus-visible,
+.admissions-page .btn-apply:focus-visible,
+.admissions-page .btn-download:focus-visible {
+  outline: 2px solid var(--red-primary);
+  outline-offset: 2px;
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+body.dark-mode .admissions-page {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+body.dark-mode .admissions-page .option-card {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.dark-mode .admissions-page .option-card h3 {
+  color: #ffffff;
+}
+
+body.dark-mode .admissions-page .option-card p,
+body.dark-mode .admissions-page .board-intro {
+  color: #94a3b8;
+}
+
+body.dark-mode .admissions-page .card-btn {
+  border-color: var(--red-primary);
+  color: var(--red-light);
+}
+
+body.dark-mode .admissions-page .option-card:hover .card-btn {
+  background-color: var(--red-primary);
+  color: #ffffff;
+}
+
+body.dark-mode .admissions-page .fees-table th {
+  background-color: #334155;
+  color: #ffffff;
+}
+
+body.dark-mode .admissions-page .fees-table td {
+  color: #cbd5e1;
+  border-bottom-color: #334155;
+}
+
+body.dark-mode .admissions-page .btn-download {
+  background-color: var(--navy-light);
+}
+
+body.dark-mode .admissions-page .btn-download:hover {
+  background-color: var(--navy);
+}

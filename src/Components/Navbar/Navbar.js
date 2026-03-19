@@ -1,6 +1,7 @@
+// src/Components/NavBar/Navbar.jsx
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, Sun, Moon } from 'lucide-react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
 import './Navbar.css';
 
 export default function Navbar() {
@@ -41,7 +42,6 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
-    { name: 'Academics', path: '/academics' },
     { name: 'Admissions', path: '/admissions' },
     { name: 'Events', path: '/events' },
     { name: 'Gallery', path: '/gallery' },
@@ -61,14 +61,18 @@ export default function Navbar() {
               className="brand-badge"
               onError={(e) => {
                 e.target.style.display = 'none';
-                e.target.nextElementSibling.style.display = 'flex';
+                e.target.nextElementSibling.style.display = 'block';
               }}
             />
-            <div className="brand-badge-fallback">L</div>
+            <img 
+              src="/joks.jpeg" 
+              alt="Fallback Logo"
+              className="brand-badge-fallback"
+            />
           </div>
           
           <div className="brand-text-wrapper">
-            <span className="brand-name">Jokolera Junior School</span>
+            <span className="brand-name">Jjokolera Junior School</span>
             <span className="brand-tagline">Excellence · Faith · Service</span>
           </div>
         </Link>
@@ -102,9 +106,9 @@ export default function Navbar() {
             {darkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
 
-          <Link to="/signin" className="portal-btn">
+          {/* ✅ Sign In Button - Links to LoginPage */}
+          <Link to="/login" className="signin-btn">
             Sign In
-            <ChevronDown size={14} className="btn-arrow" />
           </Link>
         </div>
 
@@ -153,9 +157,10 @@ export default function Navbar() {
             );
           })}
           
+          {/* ✅ Mobile Sign In Button */}
           <div className="mobile-portal-section">
-            <Link to="/signin" className="mobile-portal-btn" onClick={() => setOpen(false)}>
-              Sign In →
+            <Link to="/login" className="mobile-signin-btn" onClick={() => setOpen(false)}>
+              Sign In
             </Link>
           </div>
         </div>

@@ -1,120 +1,200 @@
-/* PAGE BACKGROUND */
+/* ===== CSS VARIABLES - SCOPED TO ADMISSION INFO PAGE ===== */
 .admission-info-page {
-  background-color: var(--bg-light); /* Cream -> Light Blue */
-  font-family: Arial, sans-serif;
-  color: var(--dark-blue);
+  /* Core Brand Colors */
+  --navy-dark: #150920;
+  --navy: #1a0f2e;
+  --navy-light: #2d1f4e;
+  
+  --red-primary: #c41e3a;
+  --red-dark: #9b1830;
+  --red-light: #d6334f;
+  
+  /* Neutrals */
+  --white: #ffffff;
+  --bg-light: #FAF8F5;
+  --gray: #6C757D;
+  --gray-dark: #495057;
+  
+  /* Effects */
+  --shadow-sm: 0 10px 30px rgba(21, 9, 32, 0.1);
+  --shadow-md: 0 15px 40px rgba(21, 9, 32, 0.15);
+  --transition: 0.3s ease;
 }
 
-/* HERO SECTION */
-.info-hero {
-  background: var(--gradient-primary); /* Green Gradient -> Blue Gradient */
+/* ===== PAGE BACKGROUND ===== */
+.admission-info-page {
+  background-color: var(--bg-light);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: var(--gray-dark);
+  min-height: 100vh;
+}
+
+/* ===== HERO SECTION ===== */
+.admission-info-page .info-hero {
+  background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
   padding: 100px 0;
   text-align: center;
   color: var(--white);
+  position: relative;
+  overflow: hidden;
 }
 
-.info-hero h1 {
+.admission-info-page .info-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(196,30,58,0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(196,30,58,0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.admission-info-page .info-hero h1 {
   font-size: 48px;
   font-weight: bold;
-  color: var(--accent-soft); /* Bright Green -> Light Blue */
+  color: var(--white);
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
-.info-hero p {
+.admission-info-page .info-hero p {
   font-size: 18px;
   margin-top: 15px;
-  color: var(--accent-soft);
+  color: rgba(255,255,255,0.9);
+  position: relative;
+  z-index: 1;
 }
 
-/* MAIN CONTENT */
-.info-content {
+/* Accent underline */
+.admission-info-page .info-hero::after {
+  content: "";
+  width: 80px;
+  height: 4px;
+  background: var(--red-primary);
+  display: block;
+  margin: 25px auto 0;
+  border-radius: 2px;
+  box-shadow: 0 0 15px rgba(196, 30, 58, 0.4);
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== MAIN CONTENT ===== */
+.admission-info-page .info-content {
   padding: 80px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-/* SECTION INTRO */
-.info-section h2 {
+/* ===== SECTION INTRO ===== */
+.admission-info-page .info-section h2 {
   font-size: 32px;
-  color: var(--primary-dark); /* Dark Green -> Dark Blue */
+  color: var(--navy-dark);
   margin-bottom: 20px;
+  font-weight: 700;
+  text-align: center;
 }
 
-.info-section .lead {
+.admission-info-page .info-section .lead {
   max-width: 700px;
-  margin: auto;
+  margin: 0 auto 40px;
   font-size: 16px;
-  color: var(--dark-blue);
+  color: var(--gray);
+  text-align: center;
+  line-height: 1.7;
 }
 
-/* CARDS */
-.info-card {
+/* ===== CARDS ===== */
+.admission-info-page .info-card {
   background: var(--white);
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(30, 64, 175, 0.1); /* Black Shadow -> Blue Shadow */
+  box-shadow: var(--shadow-sm);
   margin-top: 50px;
   overflow: hidden;
-  transition: 0.3s ease;
+  transition: var(--transition);
+  border: 1px solid var(--bg-light);
 }
 
-.info-card:hover {
+.admission-info-page .info-card:hover {
   transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--red-primary);
 }
 
-/* CARD HEADER */
-.info-card-header {
-  background-color: var(--primary-light); /* Bright Green -> Light Blue */
-  padding: 20px;
-  color: var(--primary-dark); /* Dark Green -> Dark Blue */
+/* ===== CARD HEADER ===== */
+.admission-info-page .info-card-header {
+  background-color: var(--red-primary);
+  padding: 20px 24px;
+  color: var(--white);
 }
 
-.info-card-header.bg-dark {
-  background: var(--gradient-primary); /* Dark Green Gradient -> Blue Gradient */
-  color: var(--accent-soft); /* Bright Green -> Light Blue */
+.admission-info-page .info-card-header.bg-dark {
+  background: linear-gradient(135deg, var(--navy-dark), var(--navy));
+  color: var(--white);
 }
 
-.info-card-header h3 {
+.admission-info-page .info-card-header h3 {
   margin: 0;
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 1.25rem;
 }
 
-/* CARD BODY */
-.info-card-body {
+/* ===== CARD BODY ===== */
+.admission-info-page .info-card-body {
   padding: 30px;
 }
 
-/* CHECK LIST */
-.check-list {
+/* ===== CHECK LIST ===== */
+.admission-info-page .check-list {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-.check-list li {
+.admission-info-page .check-list li {
   margin-bottom: 12px;
-  padding-left: 25px;
+  padding-left: 28px;
   position: relative;
   font-size: 15px;
+  color: var(--gray-dark);
+  line-height: 1.5;
 }
 
-.check-list li::before {
-  content: "✔";
+.admission-info-page .check-list li::before {
+  content: "✓";
   position: absolute;
   left: 0;
-  color: var(--primary-light); /* Bright Green -> Light Blue */
+  top: 2px;
+  color: var(--red-primary);
   font-weight: bold;
+  font-size: 14px;
+  background: rgba(196, 30, 58, 0.1);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* PROCESS STEPS */
-.process-steps {
+/* ===== PROCESS STEPS ===== */
+.admission-info-page .process-steps {
   display: grid;
   gap: 20px;
 }
 
-.step {
+.admission-info-page .step {
   display: flex;
   align-items: flex-start;
+  gap: 16px;
 }
 
-.step-number {
-  background: var(--primary-light); /* Bright Green -> Light Blue */
-  color: var(--primary-dark); /* Dark Green -> Dark Blue */
+.admission-info-page .step-number {
+  background: var(--red-primary);
+  color: var(--white);
   font-weight: bold;
   width: 40px;
   height: 40px;
@@ -122,90 +202,262 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 20px;
+  flex-shrink: 0;
+  font-size: 1rem;
 }
 
-.step-text h5 {
+.admission-info-page .step-text h5 {
+  margin: 0 0 4px;
+  font-weight: 700;
+  color: var(--navy-dark);
+  font-size: 1rem;
+}
+
+.admission-info-page .step-text p {
   margin: 0;
-  font-weight: bold;
-}
-
-.step-text p {
-  margin: 5px 0 0;
   font-size: 14px;
   color: var(--gray);
+  line-height: 1.5;
 }
 
-/* AGE TABLE */
-.age-criteria-section {
+/* ===== AGE TABLE ===== */
+.admission-info-page .age-criteria-section {
   margin-top: 60px;
 }
 
-.age-criteria-section h3 {
+.admission-info-page .age-criteria-section h3 {
   text-align: center;
   margin-bottom: 20px;
-  color: var(--primary);
+  color: var(--navy-dark);
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
-.age-table {
+.admission-info-page .age-table {
   width: 100%;
   border-collapse: collapse;
   background: var(--white);
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 5px 20px rgba(30, 64, 175, 0.1);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--bg-light);
 }
 
-.age-table th {
-  background: var(--primary-dark); /* Dark Green -> Dark Blue */
-  color: var(--accent-soft); /* Bright Green -> Light Blue */
+.admission-info-page .age-table th {
+  background: var(--navy-dark);
+  color: var(--white);
   padding: 15px;
+  font-weight: 700;
+  text-align: left;
 }
 
-.age-table td {
+.admission-info-page .age-table td {
   padding: 15px;
-  border-bottom: 1px solid var(--accent-soft);
+  border-bottom: 1px solid var(--bg-light);
+  color: var(--gray-dark);
 }
 
-.age-table tr:hover {
-  background-color: var(--bg-light);
+.admission-info-page .age-table tr:last-child td {
+  border-bottom: none;
 }
 
-/* DOWNLOAD SECTION */
-.download-section {
+.admission-info-page .age-table tr:hover {
+  background-color: rgba(196, 30, 58, 0.05);
+}
+
+/* ===== DOWNLOAD SECTION ===== */
+.admission-info-page .download-section {
   margin-top: 80px;
   padding: 50px;
-  background: var(--gradient-primary); /* Dark Green Gradient -> Blue Gradient */
+  background: linear-gradient(135deg, var(--navy-dark), var(--navy));
   border-radius: 15px;
+  color: var(--white);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.admission-info-page .download-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(196,30,58,0.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.admission-info-page .download-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.admission-info-page .download-section h4 {
+  color: var(--white);
+  font-size: 24px;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.admission-info-page .download-section p {
+  color: rgba(255,255,255,0.9);
+  margin-bottom: 20px;
+}
+
+.admission-info-page .download-btn {
+  margin-top: 20px;
+  padding: 12px 30px;
+  background-color: var(--red-primary);
+  border: none;
+  border-radius: 30px;
+  font-weight: 700;
+  color: var(--white);
+  transition: var(--transition);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(196, 30, 58, 0.3);
+}
+
+.admission-info-page .download-btn:hover {
+  background-color: var(--red-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(196, 30, 58, 0.45);
   color: var(--white);
 }
 
-.download-section h4 {
-  color: var(--accent-soft); /* Bright Green -> Light Blue */
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.download-btn {
-  margin-top: 20px;
-  padding: 12px 30px;
-  background-color: var(--primary-light); /* Bright Green -> Light Blue */
-  border: none;
-  border-radius: 30px;
-  font-weight: bold;
-  color: var(--primary-dark); /* Dark Green -> Dark Blue */
-  transition: 0.3s;
-}
-
-.download-btn:hover {
-  background-color: var(--primary); /* Lighter Green -> Primary Blue */
-}
-
-/* FOOTER */
-.footer {
+/* ===== FOOTER (Page-specific - Remove if using global Footer) ===== */
+/* 
+.admission-info-page .footer {
   margin-top: 80px;
-  background: var(--primary-dark); /* Dark Green -> Dark Blue */
-  color: var(--gray);
+  background: var(--navy-dark);
+  color: rgba(255,255,255,0.8);
   text-align: center;
   padding: 20px 0;
+}
+
+.admission-info-page .footer p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+*/
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .admission-info-page .info-hero {
+    padding: 70px 0;
+  }
+  
+  .admission-info-page .info-hero h1 {
+    font-size: 32px;
+  }
+  
+  .admission-info-page .info-hero p {
+    font-size: 16px;
+  }
+  
+  .admission-info-page .info-section h2 {
+    font-size: 24px;
+  }
+  
+  .admission-info-page .info-card-body {
+    padding: 24px;
+  }
+  
+  .admission-info-page .step {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+  
+  .admission-info-page .step-number {
+    margin-right: 0;
+  }
+  
+  .admission-info-page .download-section {
+    padding: 35px 24px;
+  }
+  
+  .admission-info-page .age-table {
+    font-size: 0.9rem;
+  }
+  
+  .admission-info-page .age-table th,
+  .admission-info-page .age-table td {
+    padding: 12px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admission-info-page .info-hero h1 {
+    font-size: 26px;
+  }
+  
+  .admission-info-page .info-section h2 {
+    font-size: 20px;
+  }
+  
+  .admission-info-page .check-list li {
+    font-size: 14px;
+    padding-left: 26px;
+  }
+  
+  .admission-info-page .step-number {
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+  .admission-info-page *,
+  .admission-info-page *::before,
+  .admission-info-page *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.admission-info-page .info-card:focus-within,
+.admission-info-page .download-btn:focus-visible,
+.admission-info-page .check-list li:focus-visible {
+  outline: 2px solid var(--red-primary);
+  outline-offset: 2px;
+}
+
+/* ===== DARK MODE SUPPORT (Optional) ===== */
+body.dark-mode .admission-info-page {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+body.dark-mode .admission-info-page .info-card {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.dark-mode .admission-info-page .info-card-header {
+  color: #ffffff;
+}
+
+body.dark-mode .admission-info-page .check-list li,
+body.dark-mode .admission-info-page .step-text p,
+body.dark-mode .admission-info-page .age-table td {
+  color: #cbd5e1;
+}
+
+body.dark-mode .admission-info-page .step-text h5,
+body.dark-mode .admission-info-page .age-criteria-section h3 {
+  color: #ffffff;
+}
+
+body.dark-mode .admission-info-page .age-table {
+  background: #1e293b;
+}
+
+body.dark-mode .admission-info-page .age-table th {
+  background: var(--navy-dark);
+}
+
+body.dark-mode .admission-info-page .age-table tr:hover {
+  background-color: rgba(196, 30, 58, 0.15);
 }

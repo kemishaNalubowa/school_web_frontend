@@ -1,9 +1,10 @@
 // src/Pages/Homepage/Home.jsx
 import React, { useState, useEffect, useRef } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import {
   FaGraduationCap, FaBookOpen, FaUsers, FaTrophy, FaArrowRight,
-  FaChild, FaChalkboardTeacher, FaStar, FaQuoteLeft
+  FaChild, FaChalkboardTeacher, FaStar, FaQuoteLeft, FaCalendarAlt,
+  FaImage, FaPlay, FaCheckCircle, FaHeart
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "./Home.css";
@@ -16,23 +17,43 @@ const Home = () => {
   ];
 
   const programs = [
-    { icon: <FaChild />, title: "Nursery", desc: "Nurturing young minds through play-based learning." },
-    { icon: <FaBookOpen />, title: "Primary", desc: "Building strong academic foundations and character." },
-    { icon: <FaChalkboardTeacher />, title: "Mentorship", desc: "Guiding students with personalized pastoral care." },
+    { 
+      icon: <FaChild />, 
+      title: "Nursery", 
+      desc: "Nurturing young minds through play-based learning in a safe, loving environment.",
+      color: "#c41e3a",
+    },
+    { 
+      icon: <FaBookOpen />, 
+      title: "Primary", 
+      desc: "Building strong academic foundations and character development for lifelong success.",
+      color: "#1a0f2e",
+    },
+    { 
+      icon: <FaChalkboardTeacher />, 
+      title: "Mentorship", 
+      desc: "Guiding students with personalized pastoral care and academic support.",
+      color: "#c41e3a",
+    },
   ];
 
   const features = [
-    { icon: <FaGraduationCap />, title: "Modern Curriculum", desc: "Blending Cambridge & UBE standards." },
-    { icon: <FaUsers />, title: "Small Classes", desc: "1:15 Teacher-Student ratio." },
-    { icon: <FaTrophy />, title: "Award Winning", desc: "Excellence in academics & sports." },
-    { icon: <FaStar />, title: "Values Based", desc: "Character & integrity first." }
+    { icon: <FaGraduationCap />, title: "Modern Curriculum", desc: "Blending Cambridge & UBE standards for global readiness." },
+    { icon: <FaUsers />, title: "Small Classes", desc: "Personalized attention with 1:15 teacher-student ratio." },
+    { icon: <FaTrophy />, title: "Award Winning", desc: "Excellence recognized in academics, sports & arts." },
+    { icon: <FaStar />, title: "Values Based", desc: "Character, integrity & leadership at our core." }
   ];
 
   const testimonials = [
     { image: "/teacher1.jpeg", name: "Sarah Nakato", role: "Parent", text: "JOKS School has transformed my child's confidence. The teachers truly care!", rating: 5 },
     { image: "/teacher2.jpeg", name: "James Mukasa", role: "Parent", text: "The holistic approach here is exceptional. My daughter loves school every day.", rating: 5 },
     { image: "/teacher3.jpeg", name: "Grace Akello", role: "Parent", text: "Outstanding facilities and dedicated staff. Best decision for our son's education.", rating: 5 },
-    { image: "/teacher4.jpeg", name: "Peter Okello", role: "Parent", text: "Traditional values and modern teaching - exactly what we were looking for.", rating: 5 }
+  ];
+
+  const newsItems = [
+    { date: "Mar 15", title: "Science Fair Winners", excerpt: "Our young scientists shine at the regional competition.", image: "/science.jpeg" },
+    { date: "Mar 10", title: "Sports Day Success", excerpt: "Record-breaking performances at our annual sports day.", image: "/sports.jpeg" },
+    { date: "Mar 05", title: "New Library Launch", excerpt: "State-of-the-art learning resource center now open.", image: "/library.jpeg" },
   ];
 
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -77,162 +98,293 @@ const Home = () => {
   return (
     <div className="home-page">
 
-      {/* ===== HERO ===== */}
+      {/* ===== HERO SECTION ===== */}
       <section className="home-hero">
         <div className="hero-slides-wrapper">
           {slides.map((s, i) => (
-            <div key={i} className={`hero-slide ${i === currentSlide ? "active" : ""}`} style={{ backgroundImage: `url(${s.image})` }} />
+            <div 
+              key={i} 
+              className={`hero-slide ${i === currentSlide ? "active" : ""}`} 
+              style={{ backgroundImage: `url(${s.image})` }} 
+            />
           ))}
         </div>
-        <div className="hero-glass-overlay"></div>
-        <div className="hero-overlay" />
+        <div className="hero-gradient-overlay"></div>
         <div className="hero-content">
-          <h1 className="hero-title-block">JOKS SCHOOL</h1>
+          <h1 className="hero-title">JOKS SCHOOL</h1>
           <p className="hero-tagline">Empowering Tomorrow's Leaders Through Excellence in Education</p>
-          <div className="hero-card-container">
-            <div className="hero-info-card">
-              <div className="card-icon"><FaGraduationCap /></div>
-              <div className="card-content">
-                <h3>{slides[currentSlide].title}</h3>
-                <p>{slides[currentSlide].text}</p>
-              </div>
-            </div>
+          
+          <div className="hero-cta-group">
+            <Link to="/admissions" className="btn-primary">
+              Apply Now <FaArrowRight />
+            </Link>
+            <Link to="/about" className="btn-secondary">
+              <FaPlay /> Virtual Tour
+            </Link>
           </div>
-          <Link to="/admissions" className="btn-main">
-            Apply Now <FaArrowRight style={{ marginLeft: 8 }} />
-          </Link>
         </div>
       </section>
 
-      {/* ===== METRICS SECTION ===== */}
+      {/* ===== METRICS BAR ===== */}
       <section className="metrics-section" ref={statsRef}>
         <Container>
           <div className="metrics-container">
             <div className="metric-item">
+              <div className="metric-icon"><FaUsers /></div>
               <div className="metric-value">{stats.s}+</div>
-              <div className="metric-label">Students</div>
+              <div className="metric-label">Happy Students</div>
             </div>
             <div className="metric-item">
+              <div className="metric-icon"><FaChalkboardTeacher /></div>
               <div className="metric-value">{stats.t}+</div>
-              <div className="metric-label">Teachers</div>
+              <div className="metric-label">Expert Teachers</div>
             </div>
             <div className="metric-item">
+              <div className="metric-icon"><FaTrophy /></div>
               <div className="metric-value">{stats.a}+</div>
-              <div className="metric-label">Awards</div>
+              <div className="metric-label">Awards Won</div>
             </div>
             <div className="metric-item">
+              <div className="metric-icon"><FaCalendarAlt /></div>
               <div className="metric-value">{stats.y}+</div>
-              <div className="metric-label">Years</div>
+              <div className="metric-label">Years Excellence</div>
             </div>
           </div>
         </Container>
       </section>
 
       {/* ===== ABOUT SECTION ===== */}
-      <section className="about-section-new">
-        <Container>
-          <div className="about-header">
-            <span className="section-tag">About Us</span>
-            <h2 className="section-title">
-              A Legacy of <span className="text-gradient">Excellence</span>
-            </h2>
-          </div>
-          <div className="about-grid">
-            <div className="about-image-wrapper">
-              <div className="image-main-container">
-                <img src="/graduation.jpeg" alt="Students" className="image-main" />
-              </div>
-              <div className="stroke-box"></div>
-              <div className="exp-badge">
-                <h3>10+</h3>
-                <p>Years</p>
-              </div>
-            </div>
-            <div className="about-content">
-              <h3>Why Choose JOKS School?</h3>
-              <p className="section-desc">
-                We provide a nurturing environment where academic excellence meets character development. Our holistic approach ensures every child reaches their full potential.
-              </p>
-              <div className="features-bento">
-                {features.map((f, i) => (
-                  <div key={i} className="feature-card">
-                    <div className="feature-icon">{f.icon}</div>
-                    <div className="feature-title">{f.title}</div>
-                    <div className="feature-desc">{f.desc}</div>
+      <section className="about-section-elite">
+        <Container fluid className="px-0">
+          <Row className="g-0">
+            {/* Image Side */}
+            <Col lg={6} className="about-image-col">
+              <div className="about-image-elite">
+                <img src="/graduation.jpeg" alt="Students celebrating" className="about-main-img" />
+                <div className="about-image-overlay"></div>
+                
+                {/* Floating Card */}
+                <div className="about-float-card">
+                  <div className="float-card-icon"><FaCheckCircle /></div>
+                  <div className="float-card-text">
+                    <strong>10+ Years</strong>
+                    <span>Of Educational Excellence</span>
                   </div>
-                ))}
+                </div>
+
+                {/* Decorative Elements */}
+                <div className="about-deco-circle deco-1"></div>
+                <div className="about-deco-circle deco-2"></div>
               </div>
-              <div className="mt-5">
-                <Link to="/about" className="btn-main">
-                  Learn More <FaArrowRight style={{ marginLeft: 8 }} />
-                </Link>
+            </Col>
+
+            {/* Content Side */}
+            <Col lg={6} className="about-content-col">
+              <div className="about-content-elite">
+                <span className="section-eyebrow">About JOKS</span>
+                <h2 className="section-heading">
+                  Where <span className="text-accent">Potential</span> Meets <span className="text-accent">Purpose</span>
+                </h2>
+                <p className="section-lead">
+                  For over a decade, we've been nurturing young minds in an environment where academic excellence and character development go hand in hand.
+                </p>
+                
+                <div className="about-highlights">
+                  {features.map((f, i) => (
+                    <div key={i} className="highlight-item">
+                      <div className="highlight-icon">{f.icon}</div>
+                      <div className="highlight-text">
+                        <strong>{f.title}</strong>
+                        <span>{f.desc}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="about-cta-row">
+                  <Link to="/about" className="btn-primary">
+                    Learn More <FaArrowRight />
+                  </Link>
+                </div>
               </div>
-            </div>
-          </div>
+            </Col>
+          </Row>
         </Container>
       </section>
 
-      {/* ===== PROGRAMS ===== */}
-      <section className="programs-section">
+      {/* ===== PROGRAMS SECTION ===== */}
+      <section className="programs-section-elite">
         <Container>
-          <div className="programs-header">
-            <span className="section-tag">Our Programs</span>
-            <h2 className="section-title">Education that <span className="text-gradient">Transforms</span></h2>
+          <div className="section-header-centered">
+            <span className="section-eyebrow">Our Programs</span>
+            <h2 className="section-heading">
+              Education That <span className="text-accent">Transforms</span> Lives
+            </h2>
+            <p className="section-subtitle">
+              Tailored learning pathways for every stage of your child's journey
+            </p>
           </div>
-          <div className="programs-grid">
+
+          <div className="programs-grid-elite">
             {programs.map((p, i) => (
-              <div key={i} className="program-card">
-                <div className="p-icon">{p.icon}</div>
-                <h3 className="p-title">{p.title}</h3>
-                <p className="p-desc">{p.desc}</p>
+              <div key={i} className="program-card-elite">
+                <div className="program-card-header" style={{ background: `linear-gradient(135deg, ${p.color}, ${p.color}dd)` }}>
+                  <div className="program-icon-large">{p.icon}</div>
+                  <span className="program-level">{i === 0 ? 'Ages 3-5' : i === 1 ? 'Ages 6-12' : 'All Levels'}</span>
+                </div>
+                <div className="program-card-body">
+                  <h3 className="program-title">{p.title}</h3>
+                  <p className="program-desc">{p.desc}</p>
+                </div>
               </div>
             ))}
           </div>
+
+          <div className="programs-cta">
+            <p>Not sure which program is right for your child?</p>
+            <Link to="/admissions" className="btn-primary">
+              Book a Consultation <FaArrowRight />
+            </Link>
+          </div>
         </Container>
       </section>
 
-      {/* ✨ TESTIMONIALS SECTION */}
-      <section className="testimonials-section">
+      {/* ===== GALLERY PREVIEW ===== */}
+      <section className="gallery-section-elite">
         <Container>
-          <div className="testimonials-header">
-            <span className="section-tag">Testimonials</span>
-            <h2 className="section-title">What Our <span className="text-gradient">Parents Say</span></h2>
+          <div className="section-header-centered">
+            <span className="section-eyebrow">Campus Life</span>
+            <h2 className="section-heading">A Glimpse Into <span className="text-accent">Our World</span></h2>
           </div>
-          <div className="testimonials-carousel">
+          
+          <div className="gallery-grid">
+            <div className="gallery-item gallery-large">
+              <img src="/plainschool.jpeg" alt="Campus" />
+              <div className="gallery-overlay">
+                <FaImage /> Modern Facilities
+              </div>
+            </div>
+            <div className="gallery-item">
+              <img src="/kidswithlaptops.jpeg" alt="Learning" />
+              <div className="gallery-overlay">
+                <FaBookOpen /> Digital Learning
+              </div>
+            </div>
+            <div className="gallery-item">
+              <img src="/swimming.jpeg" alt="Sports" />
+              <div className="gallery-overlay">
+                <FaTrophy /> Sports & Arts
+              </div>
+            </div>
+            <div className="gallery-item">
+              <img src="/graduation.jpeg" alt="Achievement" />
+              <div className="gallery-overlay">
+                <FaGraduationCap /> Celebrations
+              </div>
+            </div>
+          </div>
+          
+          <div className="gallery-cta">
+            <Link to="/gallery" className="btn-outline">
+              View Gallery <FaArrowRight />
+            </Link>
+          </div>
+        </Container>
+      </section>
+
+      {/* ===== TESTIMONIALS ===== */}
+      <section className="testimonials-section-elite">
+        <Container>
+          <div className="section-header-centered">
+            <span className="section-eyebrow">Testimonials</span>
+            <h2 className="section-heading">What <span className="text-accent">Parents Say</span></h2>
+          </div>
+          
+          <div className="testimonials-carousel-elite">
             {testimonials.map((t, i) => (
               <div
                 key={i}
-                className={`testimonial-card ${i === currentTestimonial ? "active" : ""}`}
+                className={`testimonial-card-elite ${i === currentTestimonial ? "active" : ""}`}
               >
-                <div className="testimonial-image-wrapper">
-                  <img src={t.image} alt={t.name} className="testimonial-image" />
-                  <div className="testimonial-rating">
-                    {[...Array(t.rating)].map((_, j) => (
-                      <FaStar key={j} className="star" />
-                    ))}
-                  </div>
-                </div>
-                <div className="testimonial-content">
-                  <FaQuoteLeft className="quote-icon" />
-                  <p className="testimonial-text">"{t.text}"</p>
+                <div className="testimonial-header">
+                  <img src={t.image} alt={t.name} className="testimonial-avatar" />
                   <div className="testimonial-author">
                     <h4>{t.name}</h4>
-                    <span className="testimonial-role">{t.role}</span>
+                    <span>{t.role}</span>
+                  </div>
+                  <div className="testimonial-rating">
+                    {[...Array(t.rating)].map((_, j) => <FaStar key={j} />)}
                   </div>
                 </div>
+                <FaQuoteLeft className="quote-icon" />
+                <p className="testimonial-text">"{t.text}"</p>
               </div>
             ))}
           </div>
-          <div className="testimonial-dots">
+          
+          <div className="testimonial-nav">
             {testimonials.map((_, i) => (
               <button
                 key={i}
                 className={`testimonial-dot ${i === currentTestimonial ? "active" : ""}`}
                 onClick={() => setCurrentTestimonial(i)}
-                aria-label={`Go to testimonial ${i + 1}`}
               />
             ))}
           </div>
+        </Container>
+      </section>
+
+      {/* ===== NEWS & EVENTS ===== */}
+      <section className="news-section-elite">
+        <Container>
+          <div className="section-header-row">
+            <div>
+              <span className="section-eyebrow">Latest News</span>
+              <h2 className="section-heading">Stay <span className="text-accent">Updated</span></h2>
+            </div>
+            <Link to="/events" className="btn-link">
+              View All <FaArrowRight />
+            </Link>
+          </div>
+          
+          <div className="news-grid">
+            {newsItems.map((news, i) => (
+              <article key={i} className="news-card">
+                <div className="news-image">
+                  <img src={news.image} alt={news.title} />
+                  <span className="news-date">{news.date}</span>
+                </div>
+                <div className="news-content">
+                  <h3>{news.title}</h3>
+                  <p>{news.excerpt}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* ===== CTA SECTION ===== */}
+      <section className="cta-section-elite">
+        <div className="cta-bg-overlay"></div>
+        <Container className="position-relative">
+          <Row className="justify-content-center text-center">
+            <Col lg={8}>
+              <FaHeart className="cta-icon" />
+              <h2 className="cta-heading">Ready to Begin Your Child's Journey?</h2>
+              <p className="cta-subtitle">
+                Join the JOKS family today and give your child the foundation they deserve.
+              </p>
+              <div className="cta-buttons">
+                <Link to="/admissions" className="btn-primary btn-lg">
+                  Apply Now <FaArrowRight />
+                </Link>
+                <Link to="/contact" className="btn-outline btn-lg">
+                  Contact Us
+                </Link>
+              </div>
+            </Col>
+          </Row>
         </Container>
       </section>
 

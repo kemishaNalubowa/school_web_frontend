@@ -237,12 +237,7 @@ const Gallery = () => {
         </Modal.Body>
       </Modal>
 
-      {/* Footer */}
-      <footer className="footer">
-        <Container>
-          <p>&copy; {new Date().getFullYear()} JOKS SCHOOL CONNECT. All Rights Reserved.</p>
-        </Container>
-      </footer>
+      
     </div>
   );
 };
