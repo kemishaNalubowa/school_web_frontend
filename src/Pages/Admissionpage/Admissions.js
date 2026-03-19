@@ -10,7 +10,8 @@ const Admissions = () => {
       {/* Hero Section */}
       <div className="admissions-hero">
         <Container>
-          <h1>Admissions</h1>
+          {/* Admissions text in white */}
+          <h1 style={{ color: "#ffffff" }}>Admissions</h1>
           <p>Begin your journey with JOKS School Connect</p>
         </Container>
       </div>
@@ -24,10 +25,11 @@ const Admissions = () => {
 
         <div className="cards-wrapper">
           
-          {/* Option 1: Admission Info - Links to /admission-info */}
+          {/* Option 1: Admission Info */}
           <Link to="/admission-info" className="card-link-wrapper">
             <div className="option-card card-info">
               <div className="card-icon">
+                {/* SVG Icon */}
                 <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" viewBox="0 0 16 16">
                   <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
                   <path d="M4.5 12.5A.5.5 0 0 1 5 12h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 10h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm1.639-3.708 1.33.886 1.854-1.855a.25.25 0 0 1 .289-.047l1.888.974V8.5a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V8s1.54-1.274 1.639-1.208z"/>
@@ -39,7 +41,7 @@ const Admissions = () => {
             </div>
           </Link>
 
-          {/* Option 2: Fees Structure - Links to /fees-structure */}
+          {/* Option 2: Fees Structure */}
           <Link to="/fees-structure" className="card-link-wrapper">
             <div className="option-card card-fees">
               <div className="card-icon">
@@ -56,17 +58,7 @@ const Admissions = () => {
         </div>
       </Container>
 
-      {/* Footer */}
-      <footer className="footer">
-        <Container>
-          <div className="social-icons">
-            <a href="#" className="social-link">FB</a>
-            <a href="#" className="social-link">TW</a>
-            <a href="#" className="social-link">IG</a>
-          </div>
-          <p> JOKS SCHOOL CONNECT. </p>
-        </Container>
-      </footer>
+      {/* Footer removed; using global footer */}
     </div>
   );
 };

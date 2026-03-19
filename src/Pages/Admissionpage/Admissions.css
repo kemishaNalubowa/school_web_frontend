@@ -22,7 +22,8 @@
   font-size: 3.5rem;
   font-weight: 800;
   margin-bottom: 15px;
-  color: var(--white);
+  color: #ffffff; /* Hero heading white */
+  animation: slideDown 0.8s ease-out;
 }
 
 .admissions-hero p {
@@ -30,6 +31,7 @@
   color: var(--accent-soft);
   max-width: 700px;
   margin: 0 auto;
+  animation: fadeIn 1s ease-out 0.3s backwards;
 }
 
 /* Accent underline */
@@ -41,6 +43,17 @@
   display: block;
   margin: 30px auto 0;
   border-radius: 3px;
+}
+
+/* --- Animations --- */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* --- Card Board Section --- */
@@ -56,6 +69,7 @@
   text-align: center;
   margin-bottom: 60px;
   color: var(--dark-blue);
+  animation: fadeIn 1s ease-out;
 }
 
 .board-intro h2 {
@@ -82,6 +96,7 @@
   transition: all 0.4s ease;
   border: 1px solid var(--accent-soft);
   box-shadow: 0 15px 35px rgba(30, 64, 175, 0.08);
+  animation: fadeIn 0.8s ease-out;
 }
 
 .option-card:hover {
@@ -209,7 +224,7 @@
   display: block;        /* Make sure the whole card is clickable */
 }
 
-/* Optional: Remove underline on hover too */
 .card-link-wrapper:hover {
   text-decoration: none;
 }
+
