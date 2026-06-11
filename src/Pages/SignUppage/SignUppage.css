@@ -24,7 +24,7 @@
 .signup-card h4 {
   text-align: center;
   font-weight: 700;
-  color: #c41e3a; /* golden/yellow school color */
+  color: var(--primary); /* global primary color */
   margin-bottom: 2rem;
   font-size: 1.8rem;
 }
@@ -50,8 +50,8 @@
 
 /* Focus state */
 .signup-card .form-control:focus {
-  border-color:  #c41e3a;
-  box-shadow: 0 0 0 0.2rem rgba(240, 196, 25, 0.25);
+  border-color:  var(--primary);
+  box-shadow: 0 0 0 0.2rem rgba(43, 45, 66, 0.15);
   outline: none;
 }
 
@@ -87,7 +87,7 @@
 .signup-card button[type="submit"] {
   width: 100%;
   height: 50px;
-  background-color:  #c41e3a; /* school golden */
+  background-color:  var(--primary);
   color: white;
   font-weight: 600;
   border-radius: 12px;
@@ -97,7 +97,7 @@
 }
 
 .signup-card button[type="submit"]:hover {
-  background-color: #9b1830 ; /* darker golden on hover */
+  background-color: var(--primary-hover);
 }
 
 /* ===== ERROR ALERT ===== */
@@ -113,7 +113,7 @@
 }
 
 .signup-card p.text-center a {
-  color:#c41e3a;
+  color: var(--primary);
   font-weight: 600;
   text-decoration: none;
 }

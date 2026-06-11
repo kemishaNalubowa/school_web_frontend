@@ -3,16 +3,17 @@
    ========================================= */
 
 :root {
-  --nb-navy-dark: #0a1628;
-  --nb-navy-primary: #1a2e4a;
-  --nb-navy-light: #243d5c;
-  --nb-red-accent: #c41e3a;
-  --nb-red-light: #d6334f;
-  --nb-white: #ffffff;
-  --nb-gray-100: #f5f5f5;
+  --nb-navy-dark: var(--primary-hover);
+  --nb-navy-primary: var(--primary);
+  --nb-navy-light: var(--secondary);
+  --nb-red-accent: var(--accent);
+  --nb-red-light: #f77694;
+  --nb-white: var(--white);
+  --nb-gray-100: var(--bg-light);
   --nb-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
   --nb-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 
 /* ===== NAVBAR ROOT - SCOPED ===== */
 .navbar-component {

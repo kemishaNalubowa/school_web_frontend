@@ -4,19 +4,19 @@
    ========================================= */
 
 :root {
-  --pd-primary: #c41e3a;
-  --pd-primary-hover: #a81830;
-  --pd-navy: #1a0f2e;
-  --pd-navy-dark: #150920;
-  --pd-bg-light: #f8fafc;
-  --pd-bg-white: #ffffff;
-  --pd-text-dark: #1e293b;
-  --pd-text-muted: #64748b;
-  --pd-border: #e2e8f0;
-  --pd-success: #22c55e;
-  --pd-warning: #f59e0b;
-  --pd-info: #3b82f6;
-  --pd-purple: #8b5cf6;
+  --pd-primary: var(--secondary);
+  --pd-primary-hover: var(--secondary-hover);
+  --pd-navy: var(--primary);
+  --pd-navy-dark: var(--primary-hover);
+  --pd-bg-light: var(--bg-light);
+  --pd-bg-white: var(--white);
+  --pd-text-dark: var(--text);
+  --pd-text-muted: var(--text-muted);
+  --pd-border: var(--border);
+  --pd-success: var(--success);
+  --pd-warning: var(--warning);
+  --pd-info: var(--secondary);
+  --pd-purple: var(--accent);
   --pd-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
   --pd-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
   --pd-shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
@@ -26,6 +26,7 @@
   --pd-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   --pd-sidebar-width: 240px;
 }
+
 
 /* ===== BASE LAYOUT ===== */
 .pd-dashboard {

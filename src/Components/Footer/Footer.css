@@ -6,13 +6,13 @@
 
 /* ===== CSS VARIABLES - PROPERLY SCOPED ===== */
 :root {
-  --ft-navy-dark: #150920;
-  --ft-navy: #1a0f2e;
-  --ft-navy-light: #2d1f4e;
-  --ft-red-primary: #c41e3a;
-  --ft-red-dark: #9b1830;
-  --ft-red-light: #d6334f;
-  --ft-white: #ffffff;
+  --ft-navy-dark: var(--primary-hover);
+  --ft-navy: var(--primary);
+  --ft-navy-light: var(--secondary);
+  --ft-red-primary: var(--accent);
+  --ft-red-dark: var(--primary-hover);
+  --ft-red-light: #f77694;
+  --ft-white: var(--white);
   --ft-gray-300: #DEE2E6;
   --ft-gray-400: #CED4DA;
   --ft-gray-500: #6C757D;
@@ -21,6 +21,7 @@
   --ft-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --ft-shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
 
 /* ===== BASE FOOTER ===== */
 .footer {

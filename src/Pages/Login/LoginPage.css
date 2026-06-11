@@ -23,7 +23,7 @@
   text-align: center;
   font-size: 2rem;
   font-weight: 700;
-  color: #c41e3a;
+  color: var(--primary);
   margin-bottom: 25px;
 }
 
@@ -54,8 +54,8 @@
 }
 
 .form-input:focus {
-  border-color: #c41e3a;
-  box-shadow: 0 0 0 2px rgba(196, 30, 58, 0.1);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(43, 45, 66, 0.1);
 }
 
 /* ===== PASSWORD FIELD ===== */
@@ -75,7 +75,7 @@
   height: 45px;
   padding: 0 14px;
   border: none;
-  background: #c41e3a;
+  background: var(--primary);
   color: #fff;
   border-radius: 10px;
   cursor: pointer;
@@ -84,7 +84,7 @@
 }
 
 .toggle-btn:hover {
-  background: #a81830;
+  background: var(--primary-hover);
 }
 
 /* ===== FORGOT PASSWORD ===== */
@@ -95,7 +95,7 @@
 
 .forgot-wrapper a {
   font-size: 0.85rem;
-  color: #c41e3a;
+  color: var(--primary);
   text-decoration: none;
 }
 
@@ -108,7 +108,7 @@
   height: 48px;
   border: none;
   border-radius: 10px;
-  background: #c41e3a;
+  background: var(--primary);
   color: #fff;
   font-size: 1rem;
   font-weight: 600;
@@ -117,7 +117,7 @@
 }
 
 .main-btn:hover {
-  background: #a81830;
+  background: var(--primary-hover);
 }
 
 /* ===== SWITCH TEXT ===== */
@@ -128,7 +128,7 @@
 }
 
 .switch a {
-  color: #c41e3a;
+  color: var(--primary);
   font-weight: 600;
   text-decoration: none;
 }

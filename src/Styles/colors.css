@@ -1,5 +1,15 @@
 :root {
-  --primary: #146c38;
-  --secondary: #feffd3;
-  --black: #000000;
-}
+  --primary: #2B2D42;       /* Navy - deep muted indigo */
+  --primary-hover: #1e202f; /* Darker navy */
+  --secondary: #118AB2;     /* Ocean Blue - calm contrast */
+  --secondary-hover: #0f789d;
+  --accent: #EF476F;        /* Coral Red - soft modern coral */
+  --bg-light: #F7F7FB;      /* Cool off-white background */
+  --white: #FFFFFF;
+  --text: #1F2937;
+  --text-muted: #6B7280;
+  --border: #E5E7EB;
+  
+  --success: #06D6A0;       /* fresh teal-green */
+  --warning: #FFD166;       /* warm soft amber */
+}
