@@ -1,139 +1,198 @@
-// src/components/SignUpForm/SignUpForm.js
-import React, { useState } from "react";
-import "./SignUpForm.css";
+import React, { useState } from 'react';
+import { Container, Card, Form, Button, Alert, InputGroup,Spinner } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
+import { parentAuthService } from '../../Services/api';
+import "./SignUppage.css";
 
 function SignUpForm() {
+    const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    terms: false,
+    name: '',
+    email: '',
+    phone_number: '',
+    password: '',
+    confirmPassword: '',
   });
 
-  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+  const validateemail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: '' }));
+  };
+
+
+    const validateForm = () => {
+    const newErrors = {};
+
+    if (!validateemail(formData.email)) {
+      newErrors.email = 'Please enter a valid Email.';
+    }
+
+    if (formData.password.length < 8) {
+      newErrors.password = 'Password must be at least 8 characters.';
+    }
+
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match!");
-      return;
+      newErrors.confirmPassword = 'Passwords do not match.';
     }
-    if (!formData.terms) {
-      setError("You must accept the terms and conditions.");
-      return;
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+
+    setLoading(true);
+
+     try {
+      const res = await parentAuthService.register({
+        email: formData.email,
+        name: formData.name,
+        phone_number: formData.phone_number,
+        password: formData.password,
+      });
+
+      toast.success('Account created successfully! Please log in.');
+      navigate('/login');
+
+    } catch (err) {
+      const message = err.response?.data?.error || 'Signup failed. Please try again.';
+      setError(message);
+    } finally {
+      setLoading(false);
     }
-    setError("");
-    console.log("Form submitted:", formData);
   };
 
   return (
-    <div className="elight-container d-flex justify-content-center align-items-center">
-      <div className="elight-card p-5">
-        <h2 className="text-center mb-4">Sign Up</h2>
+    <Container className="signup-page d-flex justify-content-center"
+    style={
+      {
+        paddingTop:"10rem",
+        paddingBottom:"5rem"
+      }
+    }>
+      <Card className="signup-card p-5 shadow-sm w-100" style={{ maxWidth: '450px' }}>
+        <h4 className="text-center mb-3 text-warning">Create Account</h4>
+        {error && <Alert variant="danger">{error}</Alert>}
 
-        {error && <div className="alert alert-danger">{error}</div>}
-
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="form-label" htmlFor="fullName">
-              Full Name
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="fullName"
-              name="fullName"
-              placeholder="Enter your full name"
-              value={formData.fullName}
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3">
+            <Form.Label>Full Name</Form.Label>
+            <Form.Control
+              name="name"
+              value={formData.name}
               onChange={handleChange}
+              placeholder="Enter your full name"
+              className="custom-input"
               required
             />
-          </div>
+          </Form.Group>
 
-          <div className="mb-4">
-            <label className="form-label" htmlFor="email">
-              Email
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
+          <Form.Group className="mb-3">
+            <Form.Label>Email Account</Form.Label>
+            <Form.Control
               name="email"
-              placeholder="Enter your email"
               value={formData.email}
               onChange={handleChange}
+              placeholder="youremail@gmail.com"
+              className="custom-input"
+              isInvalid={!!errors.email}
               required
             />
-          </div>
+            <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
+          </Form.Group>
 
-          <div className="mb-4">
-            <label className="form-label" htmlFor="password">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              name="password"
-              placeholder="Enter password"
-              value={formData.password}
+          <Form.Group className="mb-3">
+            <Form.Label>Phone Number</Form.Label>
+            <Form.Control
+              name="phone_number"
+              value={formData.phone_number}
               onChange={handleChange}
+              placeholder="Enter your phone number"
+              className="custom-input"
               required
             />
-          </div>
+          </Form.Group>
 
-          <div className="mb-4">
-            <label className="form-label" htmlFor="confirmPassword">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="confirmPassword"
-              name="confirmPassword"
-              placeholder="Confirm password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          <Form.Group className="mb-3">
+            <Form.Label>Password</Form.Label>
+            <InputGroup>
+              <Form.Control
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Create password"
+                className="custom-input"
+                isInvalid={!!errors.password}
+                required
+              />
+              <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+              <Button variant="outline-secondary" onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </Button>
+            </InputGroup>
+          </Form.Group>
 
-          <div className="mb-4 form-check">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="terms"
-              name="terms"
-              checked={formData.terms}
-              onChange={handleChange}
-            />
-            <label className="form-check-label" htmlFor="terms">
-              I accept the terms and conditions
-            </label>
-          </div>
+          <Form.Group className="mb-4">
+            <Form.Label>Confirm Password</Form.Label>
+            <InputGroup>
+              <Form.Control
+                type={showConfirm ? 'text' : 'password'}
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                placeholder="Confirm password"
+                className="custom-input"
+                isInvalid={!!errors.confirmPassword}
+                required
+              />
+              <Form.Control.Feedback type="invalid">{errors.confirmPassword}</Form.Control.Feedback>
+              <Button variant="outline-secondary" onClick={() => setShowConfirm(!showConfirm)}>
+                {showConfirm ? <FaEyeSlash /> : <FaEye />}
+              </Button>
+            </InputGroup>
+          </Form.Group>
 
-          <button type="submit" className="btn btn-elight w-100 mb-3">
-            Sign Up
-          </button>
-          <button type="button" className="btn btn-outline-elight w-100">
-            Sign Up with Google
-          </button>
-        </form>
+           <Button 
+           variant="warning" 
+           type="submit" 
+           className="w-100" 
+           disabled={loading}>
+            {loading ? (
+              <>
+                <Spinner 
+                animation="border" 
+                size="sm" /> Creating Account...
+              </>
+            ) : (
+              'Sign Up'
+            )}
+          </Button>
 
-        <p className="text-center mt-3">
-          Already have an account? <a href="/signin">Sign In</a>
-        </p>
-      </div>
-    </div>
+          <p className="text-center mt-3 small">
+            Already have an account? <Link to="/signin">Sign In</Link>
+          </p>
+        </Form>
+      </Card>
+    </Container>
   );
 }
 

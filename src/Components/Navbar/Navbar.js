@@ -4,23 +4,20 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import './Navbar.css';
 
-export default function Navbar() {
+export default function Navbar({ isAuthenticated, currentUser, onLogout }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const location = useLocation();
 
-  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => setOpen(false), [location.pathname]);
 
-  // Dark mode persistence
   useEffect(() => {
     const savedMode = localStorage.getItem('darkMode');
     if (savedMode !== null) setDarkMode(JSON.parse(savedMode));
@@ -28,13 +25,7 @@ export default function Navbar() {
 
   useEffect(() => {
     localStorage.setItem('darkMode', JSON.stringify(darkMode));
-    if (darkMode) {
-      document.body.classList.add('dark-mode');
-      document.body.classList.remove('light-mode');
-    } else {
-      document.body.classList.remove('dark-mode');
-      document.body.classList.add('light-mode');
-    }
+    document.body.classList.toggle('dark-mode', darkMode);
   }, [darkMode]);
 
   const toggleDarkMode = () => setDarkMode(!darkMode);
@@ -49,125 +40,110 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className={`navbar ${scrolled ? 'scrolled' : ''} ${open ? 'mobile-open' : ''} ${darkMode ? 'dark' : 'light'}`}>
-      <div className="navbar-container">
-        
-        {/* ===== BRAND SECTION ===== */}
-        <Link to="/" className="brand-link" onClick={() => setOpen(false)}>
-          <div className="brand-badge-wrapper">
-            <img 
-              src="/lmss.png" 
-              alt="School Badge" 
-              className="brand-badge"
-              onError={(e) => {
-                e.target.style.display = 'none';
-                e.target.nextElementSibling.style.display = 'block';
-              }}
-            />
-            <img 
-              src="/joks.jpeg" 
-              alt="Fallback Logo"
-              className="brand-badge-fallback"
-            />
-          </div>
-          
-          <div className="brand-text-wrapper">
-            <span className="brand-name">Jjokolera Junior School</span>
-            <span className="brand-tagline">Excellence · Faith · Service</span>
-          </div>
-        </Link>
+    <nav className={`navbar-component ${scrolled ? 'scrolled' : ''} ${darkMode ? 'dark' : ''}`}>
+      <div className="nb-container">
 
-        {/* ===== DESKTOP NAVIGATION ===== */}
-        <ul className="desktop-nav">
+        {/* ===== BRAND ===== */}
+  {/* ===== BRAND ===== */}
+<Link to="/" className="nb-brand-link">
+  <div className="nb-badge-wrapper">
+    {/* Primary Badge */}
+    <img 
+      src="/lmss.png" 
+      alt="JJokolera Junior School Badge" 
+      className="nb-badge"
+      onError={(e) => {
+        // Hide primary if it fails to load
+        e.target.style.display = 'none';
+        // Show fallback image
+        const fallback = e.target.parentElement?.querySelector('.nb-badge-fallback');
+        if (fallback) fallback.style.display = 'block';
+      }}
+    />
+    {/* ✅ Fallback Badge Image (NOT text) */}
+    <img 
+      src="/joks.png" 
+      alt="JJokolera Junior School Logo" 
+      className="nb-badge-fallback"
+    />
+  </div>
+  
+  <div className="nb-brand-text">
+    <span className="nb-brand-name">Jjokolera Junior School</span>
+    <span className="nb-brand-tagline">Excellence · Faith · Service</span>
+  </div>
+</Link>
+
+        {/* ===== DESKTOP NAV ===== */}
+        <ul className="nb-desktop-nav">
           {navLinks.map(link => {
             const isActive = location.pathname === link.path;
             return (
-              <li key={link.path} className="nav-item">
-                <Link 
-                  to={link.path}
-                  className={`nav-link ${isActive ? 'active' : ''}`}
-                >
+              <li key={link.path}>
+                <Link to={link.path} className={`nb-nav-link ${isActive ? 'active' : ''}`}>
                   {link.name}
-                  {isActive && <span className="nav-link-indicator" />}
                 </Link>
               </li>
             );
           })}
         </ul>
 
-        {/* ===== DESKTOP ACTIONS ===== */}
-        <div className="desktop-actions">
-          {/* Dark Mode Toggle */}
-          <button 
-            className="dark-mode-toggle"
-            onClick={toggleDarkMode}
-            aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-          >
-            {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+        {/* ===== ACTIONS ===== */}
+        <div className="nb-desktop-actions">
+          <button className="nb-dark-toggle" onClick={toggleDarkMode} aria-label="Toggle dark mode">
+            {darkMode ? <Sun size={18} /> : <Moon size={18} />}
           </button>
-
-          {/* ✅ Sign In Button - Links to LoginPage */}
-          <Link to="/login" className="signin-btn">
-            Sign In
+          <Link 
+            to={isAuthenticated ? "/parent" : "/login"} 
+            className="nb-signin-btn"
+          >
+            Child Progress
           </Link>
+          {isAuthenticated && (
+            <button className="nb-logout-btn" onClick={onLogout}>Logout</button>
+          )}
         </div>
 
-        {/* ===== MOBILE MENU TOGGLE ===== */}
-        <button 
-          className="mobile-toggle"
-          onClick={() => setOpen(!open)}
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          aria-expanded={open}
-        >
-          {open ? <X size={24} /> : <Menu size={24} />}
+        {/* ===== MOBILE TOGGLE ===== */}
+        <button className="nb-mobile-toggle" onClick={() => setOpen(!open)} aria-label="Toggle menu">
+          {open ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
-      {/* ===== MOBILE DROPDOWN MENU ===== */}
-      <div className={`mobile-menu ${open ? 'open' : ''}`}>
-        <div className="mobile-menu-content">
-          {/* Mobile Dark Mode Toggle */}
+      {/* ===== MOBILE MENU ===== */}
+      <div className={`nb-mobile-menu ${open ? 'open' : ''}`}>
+        <div className="nb-mobile-content">
           <button 
-            className="mobile-dark-mode-toggle"
-            onClick={() => {
-              toggleDarkMode();
-              setOpen(false);
-            }}
+            className="nb-mobile-dark-toggle"
+            onClick={() => { toggleDarkMode(); setOpen(false); }}
           >
-            <span className="toggle-icon">
-              {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-            </span>
-            <span className="toggle-text">
-              {darkMode ? 'Light Mode' : 'Dark Mode'}
-            </span>
+            {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+            <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
           </button>
-
-          {navLinks.map(link => {
-            const isActive = location.pathname === link.path;
-            return (
-              <Link 
-                key={link.path} 
-                to={link.path}
-                className={`mobile-nav-link ${isActive ? 'active' : ''}`}
-                onClick={() => setOpen(false)}
-              >
-                <span className="mobile-link-text">{link.name}</span>
-                {isActive && <span className="mobile-link-indicator" />}
-              </Link>
-            );
-          })}
-          
-          {/* ✅ Mobile Sign In Button */}
-          <div className="mobile-portal-section">
-            <Link to="/login" className="mobile-signin-btn" onClick={() => setOpen(false)}>
-              Sign In
+          {navLinks.map(link => (
+            <Link 
+              key={link.path}
+              to={link.path}
+              className={`nb-mobile-link ${location.pathname === link.path ? 'active' : ''}`}
+              onClick={() => setOpen(false)}
+            >
+              {link.name}
             </Link>
-          </div>
+          ))}
+          <Link 
+            to={isAuthenticated ? "/parent" : "/login"} 
+            className="nb-mobile-signin-btn"
+            onClick={() => setOpen(false)}
+          >
+            Child Progress
+          </Link>
+          {isAuthenticated && (
+            <button className="nb-mobile-logout" onClick={() => { onLogout(); setOpen(false); }}>
+              Logout
+            </button>
+          )}
         </div>
       </div>
-
-      {/* ===== SCROLL SHADOW OVERLAY ===== */}
-      <div className="navbar-shadow" />
     </nav>
   );
 }

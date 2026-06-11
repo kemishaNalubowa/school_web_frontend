@@ -1,7 +1,10 @@
 // src/Pages/Events/Events.jsx
 import React, { useState, useMemo } from "react";
-import { Modal, Button } from "react-bootstrap";
-import { FaSearch, FaCalendarAlt, FaMapMarkerAlt, FaClock, FaArrowRight, FaTimes } from "react-icons/fa";
+import { Modal } from "react-bootstrap";
+import { 
+  FaSearch, FaCalendarAlt, FaMapMarkerAlt, FaClock, 
+  FaArrowRight, FaTimes, FaList, FaThLarge 
+} from "react-icons/fa";
 import "./Events.css";
 
 const Events = () => {
@@ -11,7 +14,7 @@ const Events = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  // Sample events data - Replace with API calls
+  // Sample events data - Replace with Django API call later
   const eventsData = [
     {
       id: 1,
@@ -21,7 +24,7 @@ const Events = () => {
       time: "8:00 AM - 4:00 PM",
       location: "School Main Field",
       category: "sports",
-      image: "/sports.jpeg"
+      image: "/swimming.jpeg"
     },
     {
       id: 2,
@@ -31,7 +34,7 @@ const Events = () => {
       time: "9:00 AM - 3:00 PM",
       location: "Science Block",
       category: "academic",
-      image: "/science.jpeg"
+      image: "/graduation1.jpg"
     },
     {
       id: 3,
@@ -41,7 +44,7 @@ const Events = () => {
       time: "10:00 AM - 5:00 PM",
       location: "School Hall",
       category: "cultural",
-      image: "/cultural.jpeg"
+      image: "/cultureday1.jpg"
     },
     {
       id: 4,
@@ -51,7 +54,7 @@ const Events = () => {
       time: "2:00 PM - 7:00 PM",
       location: "Classrooms",
       category: "meeting",
-      image: "/meeting.jpeg"
+      image: "/teacher1.jpeg"
     },
     {
       id: 5,
@@ -61,7 +64,7 @@ const Events = () => {
       time: "6:00 PM - 9:00 PM",
       location: "Auditorium",
       category: "arts",
-      image: "/arts.jpeg"
+      image: "/cultureday1.jpg"
     },
     {
       id: 6,
@@ -81,20 +84,27 @@ const Events = () => {
     { id: "academic", label: "Academic" },
     { id: "cultural", label: "Cultural" },
     { id: "arts", label: "Arts" },
-    { id: "meeting", label: "Meetings" }
+    { id: "meeting", label: "Meetings" },
+    { id: "ceremony", label: "Ceremonies" }
   ];
 
-  // Filter events based on search and category
+  // 🔍 REAL-TIME SEARCH + CATEGORY FILTER
   const filteredEvents = useMemo(() => {
     return eventsData.filter(event => {
-      const matchesSearch = event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           event.description.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory = selectedCategory === "all" || event.category === selectedCategory;
+      const matchesSearch = 
+        event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        event.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        event.location.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      const matchesCategory = 
+        selectedCategory === "all" || 
+        event.category === selectedCategory;
+      
       return matchesSearch && matchesCategory;
     });
   }, [searchTerm, selectedCategory]);
 
-  // Handle event card click
+  // Handle event card click → open modal
   const handleEventClick = (event) => {
     setSelectedEvent(event);
     setShowModal(true);
@@ -111,91 +121,135 @@ const Events = () => {
       
       {/* ===== HERO SECTION ===== */}
       <section className="events-hero">
-        <h1>School Events</h1>
-        <p className="hero-subtitle">
-          Stay updated with all school activities, celebrations, and important gatherings.
-        </p>
-        
-        {/* Search Bar */}
-        <div className="search-wrapper">
-          <FaSearch className="search-icon" />
-          <input
-            type="text"
-            className="search-input"
-            placeholder="Search events..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          {searchTerm && (
-            <button className="search-clear" onClick={() => setSearchTerm("")}>
-              <FaTimes />
-            </button>
-          )}
+        <div className="events-hero-content">
+          <h1>School Events</h1>
+          <p className="events-hero-subtitle">
+            Stay updated with all school activities, celebrations, and important gatherings.
+          </p>
+          
+          {/* ✅ WORKING SEARCH BAR */}
+          <div className="events-search-wrapper">
+            <FaSearch className="events-search-icon" aria-hidden="true" />
+            <input
+              type="text"
+              className="events-search-input"
+              placeholder="Search events by name, description, or location..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              aria-label="Search events"
+            />
+            {searchTerm && (
+              <button 
+                className="events-search-clear" 
+                onClick={() => setSearchTerm("")}
+                aria-label="Clear search"
+              >
+                <FaTimes />
+              </button>
+            )}
+          </div>
         </div>
       </section>
 
       {/* ===== MAIN CONTENT ===== */}
       <main className="events-main">
         
-        {/* Filter Chips */}
+        {/* Filter Chips + View Toggle */}
         <div className="events-controls">
-          {categories.map(cat => (
+          <div className="events-filter-chips" role="tablist" aria-label="Filter events by category">
+            {categories.map(cat => (
+              <button
+                key={cat.id}
+                className={`events-filter-chip ${selectedCategory === cat.id ? "active" : ""}`}
+                onClick={() => setSelectedCategory(cat.id)}
+                role="tab"
+                aria-selected={selectedCategory === cat.id}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+          
+          <div className="events-view-toggle">
             <button
-              key={cat.id}
-              className={`filter-chip ${selectedCategory === cat.id ? "active" : ""}`}
-              onClick={() => setSelectedCategory(cat.id)}
+              className={`events-view-btn ${viewMode === "grid" ? "active" : ""}`}
+              onClick={() => setViewMode("grid")}
+              aria-label="Grid view"
+              aria-pressed={viewMode === "grid"}
             >
-              {cat.label}
+              <FaThLarge />
             </button>
-          ))}
+            <button
+              className={`events-view-btn ${viewMode === "list" ? "active" : ""}`}
+              onClick={() => setViewMode("list")}
+              aria-label="List view"
+              aria-pressed={viewMode === "list"}
+            >
+              <FaList />
+            </button>
+          </div>
         </div>
 
-        {/* Events Grid */}
+        {/* Events Count */}
+        <p className="events-count" aria-live="polite">
+          Showing {filteredEvents.length} of {eventsData.length} events
+        </p>
+
+        {/* Events Grid/List */}
         {filteredEvents.length > 0 ? (
-          <div className={`events-layout ${viewMode}`}>
-            {filteredEvents.map(event => (
+          <div className={`events-layout ${viewMode === "grid" ? "grid" : "list"}`}>
+            {filteredEvents.map((event, index) => (
               <article
                 key={event.id}
-                className={`event-card ${viewMode === "list" ? "list-view" : ""}`}
+                className={`events-card ${viewMode === "list" ? "list-view" : ""}`}
                 onClick={() => handleEventClick(event)}
+                onKeyDown={(e) => e.key === "Enter" && handleEventClick(event)}
+                role="button"
+                tabIndex={0}
+                style={{ animationDelay: `${index * 0.05}s` }}
+                aria-label={`View details for ${event.title}`}
               >
                 {/* Event Image */}
-                <div className="event-image-container">
+                <div className="events-image-container">
                   <img
                     src={event.image}
                     alt={event.title}
-                    className="event-image"
+                    className="events-image"
+                    loading="lazy"
                     onError={(e) => {
-                      e.target.src = "https://via.placeholder.com/400x200/1a0f2e/c41e3a?text=" + encodeURIComponent(event.title);
+                      e.target.src = `https://via.placeholder.com/400x200/1a0f2e/c41e3a?text=${encodeURIComponent(event.title)}`;
                     }}
                   />
+                  <span className={`events-category-badge events-cat-${event.category}`}>
+                    {event.category}
+                  </span>
                 </div>
 
                 {/* Event Content */}
-                <div className="event-content">
-                  <h3 className="event-title">{event.title}</h3>
-                  <p className="event-description">{event.description}</p>
+                <div className="events-content">
+                  <h3 className="events-title">{event.title}</h3>
+                  <p className="events-description">{event.description}</p>
                   
                   {/* Event Meta */}
-                  <div className="event-meta">
-                    <div className="meta-item">
-                      <FaCalendarAlt />
+                  <div className="events-meta">
+                    <div className="events-meta-item">
+                      <FaCalendarAlt aria-hidden="true" />
                       <span>{event.date}</span>
                     </div>
-                    <div className="meta-item">
-                      <FaClock />
+                    <div className="events-meta-item">
+                      <FaClock aria-hidden="true" />
                       <span>{event.time}</span>
                     </div>
-                    <div className="meta-item">
-                      <FaMapMarkerAlt />
+                    <div className="events-meta-item">
+                      <FaMapMarkerAlt aria-hidden="true" />
                       <span>{event.location}</span>
                     </div>
                   </div>
 
-                  {/* Action Button */}
-                  <div className="event-actions-footer">
-                    <button className="details-btn">
-                      View Details <FaArrowRight />
+                  {/* View Details Button */}
+                  <div className="events-actions-footer">
+                    <button className="events-details-btn" onClick={(e) => { e.stopPropagation(); handleEventClick(event); }}>
+                      View Details <FaArrowRight aria-hidden="true" />
                     </button>
                   </div>
                 </div>
@@ -204,61 +258,75 @@ const Events = () => {
           </div>
         ) : (
           /* Empty State */
-          <div className="empty-state">
+          <div className="events-empty-state">
+            <div className="events-empty-icon">🔍</div>
             <h3>No Events Found</h3>
             <p>Try adjusting your search or filter to find what you're looking for.</p>
+            <button 
+              className="events-reset-btn"
+              onClick={() => { setSearchTerm(""); setSelectedCategory("all"); }}
+            >
+              Reset Filters
+            </button>
           </div>
         )}
 
       </main>
 
-      {/* ===== EVENT DETAILS MODAL ===== */}
+      {/* ✅ EVENT DETAILS MODAL (NO REGISTER BUTTON) */}
       <Modal
         show={showModal}
         onHide={handleCloseModal}
         centered
-        className="event-modal"
+        className="events-modal"
         size="lg"
+        aria-labelledby="event-modal-title"
+        role="dialog"
+        aria-modal="true"
       >
         {selectedEvent && (
           <>
             <Modal.Header closeButton>
-              <Modal.Title>{selectedEvent.title}</Modal.Title>
+              <Modal.Title id="event-modal-title">{selectedEvent.title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <div className="modal-content-grid">
+              <div className="events-modal-grid">
                 {/* Modal Image */}
-                <div className="modal-image">
+                <div className="events-modal-image">
                   <img
                     src={selectedEvent.image}
                     alt={selectedEvent.title}
                     onError={(e) => {
-                      e.target.src = "https://via.placeholder.com/400x300/1a0f2e/c41e3a?text=" + encodeURIComponent(selectedEvent.title);
+                      e.target.src = `https://via.placeholder.com/400x300/1a0f2e/c41e3a?text=${encodeURIComponent(selectedEvent.title)}`;
                     }}
                   />
+                  <span className={`events-modal-category events-cat-${selectedEvent.category}`}>
+                    {selectedEvent.category}
+                  </span>
                 </div>
 
                 {/* Modal Details */}
-                <div className="modal-details">
-                  <div className="detail-section">
+                <div className="events-modal-details">
+                  <div className="events-modal-section">
                     <h5>About This Event</h5>
                     <p>{selectedEvent.description}</p>
                   </div>
 
-                  <div className="detail-section">
+                  <div className="events-modal-section">
                     <h5>Event Details</h5>
                     <p><strong>Date:</strong> {selectedEvent.date}</p>
                     <p><strong>Time:</strong> {selectedEvent.time}</p>
                     <p><strong>Location:</strong> {selectedEvent.location}</p>
                   </div>
 
-                  <div className="modal-actions">
-                    <Button className="modal-register-btn" onClick={handleCloseModal}>
-                      Register Now
-                    </Button>
-                    <Button variant="outline-secondary" onClick={handleCloseModal}>
+                  {/* ✅ NO REGISTER BUTTON - Just Close */}
+                  <div className="events-modal-actions">
+                    <button 
+                      className="events-modal-close-btn"
+                      onClick={handleCloseModal}
+                    >
                       Close
-                    </Button>
+                    </button>
                   </div>
                 </div>
               </div>

@@ -51,14 +51,23 @@ const Contact = () => {
           <div className="contact-form-side">
             <div className="form-wrapper">
               
-              {/* Decorative Header */}
+              {/* ✨ Decorative Header with School Logo */}
               <div className="form-header">
-                <div className="header-icon">💬</div>
+                <div className="header-logo">
+                  <img 
+                    src="/joks.png" 
+                    alt="JJokolera Junior School Logo" 
+                    className="school-logo"
+                    width="64"
+                    height="64"
+                    loading="lazy"
+                  />
+                </div>
                 <h1>Get In Touch</h1>
                 <p className="lead">Have a question? We'd love to hear from you.</p>
               </div>
 
-              {/* Success Message */}
+              {/* ✨ Success Message */}
               {submitStatus === "success" && (
                 <div className="success-message" role="alert">
                   <span className="success-icon">✓</span>
@@ -75,7 +84,7 @@ const Contact = () => {
                       id="name"
                       type="text" 
                       name="name" 
-                      placeholder="John Doe" 
+                      placeholder="write your name here..." 
                       value={formData.name}
                       onChange={handleChange}
                       className="custom-input"
@@ -93,7 +102,7 @@ const Contact = () => {
                       id="email"
                       type="email" 
                       name="email" 
-                      placeholder="john@example.com" 
+                      placeholder="write your email here..." 
                       value={formData.email}
                       onChange={handleChange}
                       className="custom-input"
@@ -141,7 +150,7 @@ const Contact = () => {
                 </Button>
               </Form>
 
-              {/* Trust Badges */}
+              {/* ✨ Trust Badges */}
               <div className="trust-badges">
                 <span className="badge-item">🔒 Secure</span>
                 <span className="badge-item">⚡ Quick Response</span>

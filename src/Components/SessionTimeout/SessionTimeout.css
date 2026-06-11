@@ -1,0 +1,202 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SESSION TIMEOUT WARNING MODAL
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Dark backdrop overlay */
+.session-timeout-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  animation: fadeInOverlay 0.3s ease-out;
+}
+
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Modal card */
+.session-timeout-modal {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 36px 32px 28px;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+              0 0 0 1px rgba(20, 108, 56, 0.1);
+  text-align: center;
+  animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.session-timeout-modal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #146c38, #1a9e50, #146c38);
+  background-size: 200% 100%;
+  animation: shimmerBar 2s ease-in-out infinite;
+}
+
+@keyframes shimmerBar {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Warning icon */
+.session-timeout-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  background: linear-gradient(135deg, #fff3cd, #ffeeba);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  animation: pulseIcon 2s ease-in-out infinite;
+}
+
+@keyframes pulseIcon {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.08); }
+}
+
+/* Title */
+.session-timeout-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+}
+
+/* Message text */
+.session-timeout-message {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* Countdown timer ring */
+.session-timeout-countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.countdown-circle {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.countdown-circle svg {
+  transform: rotate(-90deg);
+  width: 80px;
+  height: 80px;
+}
+
+.countdown-circle .track {
+  fill: none;
+  stroke: #e9ecef;
+  stroke-width: 6;
+}
+
+.countdown-circle .progress {
+  fill: none;
+  stroke: #146c38;
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear;
+}
+
+.countdown-number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #146c38;
+}
+
+.countdown-label {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+/* Buttons */
+.session-timeout-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.session-timeout-btn {
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  letter-spacing: 0.01em;
+}
+
+.session-timeout-btn:active {
+  transform: scale(0.97);
+}
+
+.btn-continue {
+  background: linear-gradient(135deg, #146c38, #1a9e50);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(20, 108, 56, 0.35);
+}
+
+.btn-continue:hover {
+  background: linear-gradient(135deg, #0f5a2d, #158a45);
+  box-shadow: 0 6px 20px rgba(20, 108, 56, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-logout {
+  background: #f8f9fa;
+  color: #555;
+  border: 1px solid #dee2e6;
+}
+
+.btn-logout:hover {
+  background: #e9ecef;
+  color: #333;
+  transform: translateY(-1px);
+}
